@@ -55,6 +55,10 @@ nav .in{display:flex;align-items:center;justify-content:space-between;padding:16
 .nav-web{border:1px solid var(--card-line);color:var(--text2);font-weight:700;font-size:13px;padding:9px 16px;border-radius:10px;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:6px}
 .nav-web:hover{border-color:var(--green);color:var(--text)}
 .nav-web svg{width:13px;height:13px}
+.nav-login{border:1px solid var(--card-line);background:transparent;color:var(--text);font-weight:700;font-size:13px;padding:9px 16px;border-radius:10px;cursor:pointer;font-family:inherit;white-space:nowrap;display:flex;align-items:center;gap:6px;transition:border-color .15s,color .15s}
+.nav-login:hover{border-color:var(--green);color:var(--green)}
+.nav-login svg{width:14px;height:14px}
+.nav-login.logged-in{border-color:var(--green-border,rgba(0,230,118,.3));background:var(--green-dim);color:var(--green)}
 
 /* ===== HERO ===== */
 .hero{position:relative;padding:88px 0 60px;text-align:center;overflow:hidden}
@@ -190,14 +194,34 @@ nav .in{display:flex;align-items:center;justify-content:space-between;padding:16
 .modal p.hint{font-size:12px;color:var(--text3);margin-bottom:18px;font-family:'Noto Sans Bengali'}
 .star-picker{display:flex;gap:6px;font-size:28px;color:#2a2e29;cursor:pointer;margin-bottom:16px}
 .star-picker span.on{color:var(--gold)}
-.modal input,.modal textarea{width:100%;background:#0c0f0c;border:1px solid var(--card-line);border-radius:10px;padding:11px 13px;color:var(--text);font-family:inherit;font-size:13.5px;margin-bottom:12px;outline:none}
-.modal input:focus,.modal textarea:focus{border-color:var(--green)}
+.modal input,.modal textarea,.modal select{width:100%;background:#0c0f0c;border:1px solid var(--card-line);border-radius:10px;padding:11px 13px;color:var(--text);font-family:inherit;font-size:13.5px;margin-bottom:12px;outline:none}
+.modal input:focus,.modal textarea:focus,.modal select:focus{border-color:var(--green)}
 .modal textarea{min-height:80px;resize:vertical}
 .modal-actions{display:flex;gap:10px;margin-top:6px}
 .modal-actions button{flex:1;padding:12px;border-radius:10px;border:none;font-weight:700;font-size:13.5px;cursor:pointer;font-family:inherit}
 .btn-cancel{background:#181c18;color:var(--text2)}
 .btn-submit{background:var(--green);color:#001a0a}
 .modal-close{position:absolute;top:16px;right:18px;cursor:pointer;color:var(--text3);font-size:16px}
+
+/* ===== AUTH MODAL (login / register) ===== */
+.auth-modal{max-width:380px}
+.auth-modal-logo{width:52px;height:52px;border-radius:16px;background:var(--green-dim);border:1.5px solid rgba(0,230,118,.28);display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 12px}
+.auth-modal h3{text-align:center;font-family:'Space Grotesk','Noto Sans Bengali'}
+.auth-modal p.hint{text-align:center}
+.auth-tabs{display:flex;background:#0c0f0c;border:1px solid var(--card-line);border-radius:12px;padding:3px;gap:3px;margin-bottom:18px}
+.auth-tab{flex:1;text-align:center;padding:9px;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;color:var(--text3);transition:all .2s;font-family:'Noto Sans Bengali'}
+.auth-tab.active{background:var(--green);color:#001a0a}
+.auth-field-label{font-size:10.5px;font-weight:700;color:var(--text3);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px}
+.auth-error{color:#FF5252;font-size:12px;font-weight:600;text-align:center;margin-bottom:10px;min-height:14px;font-family:'Noto Sans Bengali'}
+.auth-divider{display:flex;align-items:center;gap:10px;color:var(--text3);font-size:11px;font-weight:700;margin:6px 0 12px}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--card-line)}
+.btn-google-auth{width:100%;padding:12px;border-radius:10px;border:1px solid var(--card-line);background:#0c0f0c;color:var(--text2);font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:10px;transition:border-color .2s}
+.btn-google-auth:hover{border-color:var(--green)}
+.auth-success-wrap{text-align:center;padding:6px 0}
+.auth-success-ico{font-size:46px;margin-bottom:12px}
+.auth-success-title{font-size:17px;font-weight:700;margin-bottom:6px;font-family:'Noto Sans Bengali'}
+.auth-success-sub{font-size:12.5px;color:var(--text2);margin-bottom:20px;font-family:'Noto Sans Bengali';line-height:1.6}
+.auth-note{font-size:11px;color:var(--text3);text-align:center;margin-top:12px;line-height:1.6;font-family:'Noto Sans Bengali'}
 
 /* ===== FAQ ===== */
 .faq-list{max-width:720px;margin:0 auto}
@@ -229,6 +253,7 @@ footer{border-top:1px solid var(--card-line);padding:32px 0;text-align:center;co
   .step-arrow{display:none}
   .task-types{grid-template-columns:1fr}
   .nav-web .lbl-full{display:none}
+  .nav-login .lbl-full{display:none}
 }
 
 /* ══════════════ HERO 3D SCENE (trust visual) ══════════════ */
@@ -302,6 +327,10 @@ footer{border-top:1px solid var(--card-line);padding:32px 0;text-align:center;co
       <div class="brand-name">WorkHive</div>
     </div>
     <div class="nav-actions">
+      <button class="nav-login" id="navLoginBtn" onclick="openAuthModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+        <span class="lbl-full" id="navLoginLbl">লগইন</span>
+      </button>
       <a href="https://tinyurl.com/worhive" target="_blank" rel="noopener" class="nav-web">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 0 1 0 18M12 3a13 13 0 0 0 0 18"/></svg>
         <span class="lbl-full">ওয়েবসাইট</span>
@@ -645,13 +674,74 @@ footer{border-top:1px solid var(--card-line);padding:32px 0;text-align:center;co
   </div>
 </div>
 
+<!-- AUTH MODAL (login / register — same Firebase project as the app) -->
+<div class="modal-overlay" id="authOverlay">
+  <div class="modal auth-modal">
+    <div class="modal-close" onclick="closeAuthModal()">✕</div>
+    <div id="authModalBody">
+      <div class="auth-modal-logo">🐝</div>
+      <h3>WorkHive-এ লগইন করুন</h3>
+      <p class="hint">নতুন হলে রেজিস্টার করুন, অথবা লগইন করে চালিয়ে যান</p>
+
+      <div class="auth-tabs">
+        <div class="auth-tab active" id="authTabLogin" onclick="switchAuthTab('login')">লগইন</div>
+        <div class="auth-tab" id="authTabRegister" onclick="switchAuthTab('register')">রেজিস্টার</div>
+      </div>
+
+      <!-- LOGIN PANE -->
+      <div id="authLoginPane">
+        <label class="auth-field-label">ইমেইল</label>
+        <input type="email" id="authLoginEmail" placeholder="you@example.com">
+        <label class="auth-field-label">পাসওয়ার্ড</label>
+        <input type="password" id="authLoginPass" placeholder="আপনার পাসওয়ার্ড">
+        <div class="auth-error" id="authLoginErr"></div>
+        <div class="modal-actions" style="margin-bottom:4px">
+          <button class="btn-submit" style="flex:1" id="authLoginBtn" onclick="doWebLogin()">লগইন করুন</button>
+        </div>
+        <div class="auth-divider">অথবা</div>
+        <button class="btn-google-auth" onclick="doWebGoogleAuth()">
+          <svg width="17" height="17" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Google দিয়ে লগইন করুন
+        </button>
+      </div>
+
+      <!-- REGISTER PANE -->
+      <div id="authRegisterPane" style="display:none">
+        <label class="auth-field-label">পূর্ণ নাম</label>
+        <input type="text" id="authRegName" placeholder="আপনার নাম">
+        <label class="auth-field-label">ইমেইল</label>
+        <input type="email" id="authRegEmail" placeholder="you@example.com">
+        <label class="auth-field-label">ফোন নম্বর</label>
+        <input type="tel" id="authRegPhone" placeholder="+880 1XXXXXXXXX">
+        <label class="auth-field-label">পাসওয়ার্ড</label>
+        <input type="password" id="authRegPass" placeholder="কমপক্ষে ৬ ক্যারেক্টার">
+        <label class="auth-field-label">রেফারেল কোড (ঐচ্ছিক)</label>
+        <input type="text" id="authRegRef" placeholder="e.g. WH123456" style="text-transform:uppercase">
+        <div class="auth-error" id="authRegErr"></div>
+        <div class="modal-actions" style="margin-bottom:4px">
+          <button class="btn-submit" style="flex:1" id="authRegBtn" onclick="doWebRegister()">অ্যাকাউন্ট তৈরি করুন</button>
+        </div>
+        <div class="auth-divider">অথবা</div>
+        <button class="btn-google-auth" onclick="doWebGoogleAuth()">
+          <svg width="17" height="17" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Google দিয়ে রেজিস্টার করুন
+        </button>
+      </div>
+
+      <div class="auth-note">🔒 এটি আপনার WorkHive অ্যাপের মতো একই অ্যাকাউন্ট — এখানে সাইন করলে অ্যাপেও একই ইমেইল/পাসওয়ার্ড দিয়ে লগইন করতে পারবেন।</div>
+    </div>
+  </div>
+</div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, serverTimestamp, getCountFromServer } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, serverTimestamp, getCountFromServer, doc, setDoc, getDoc, updateDoc, increment, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, signInAnonymously, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, updateProfile, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-// Same Firebase project WorkHive's app & admin panel already use — reviews
-// and stats shown here are read live from that project, nothing is hardcoded.
+// Same Firebase project WorkHive's app & admin panel already use — reviews,
+// stats AND now login/register on this landing page all read/write to that
+// same project, so an account created here is the exact same account used
+// inside the WorkHive app.
 const firebaseConfig = {
   apiKey: "AIzaSyCeA-269WRHJCehg9Z__tlre_EbZcfanlY",
   authDomain: "workhive-35207.firebaseapp.com",
@@ -663,7 +753,36 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+
+// Expose what the plain <script> block below needs
+window._authDb = db;
+window._authAuth = auth;
+window._authFns = {
+  createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup,
+  googleProvider, updateProfile, signOut,
+  doc, setDoc, getDoc, updateDoc, increment,
+  collection, addDoc, getDocs, query, where, serverTimestamp
+};
+
+// Anonymous session used only for the public reviews widget below — kept
+// separate from the real login/register flow so it never interferes with it.
 signInAnonymously(auth).catch(() => {});
+
+// Track real (non-anonymous) auth state to update the nav "লগইন" button
+onAuthStateChanged(auth, (user) => {
+  const btn = document.getElementById('navLoginBtn');
+  const lbl = document.getElementById('navLoginLbl');
+  if (!btn || !lbl) return;
+  if (user && !user.isAnonymous) {
+    btn.classList.add('logged-in');
+    const shortName = (user.displayName || user.email || 'Account').split(' ')[0];
+    lbl.textContent = '✓ ' + shortName;
+  } else {
+    btn.classList.remove('logged-in');
+    lbl.textContent = 'লগইন';
+  }
+});
 
 window._selectedStars = 5;
 window.openReviewModal = () => document.getElementById('reviewOverlay').classList.add('show');
@@ -780,6 +899,161 @@ document.querySelectorAll('.faq-item').forEach(item => {
     });
   }
 })();
+</script>
+
+<!-- ══════════ LOGIN / REGISTER LOGIC (same Firebase project as the app) ══════════ -->
+<script>
+function openAuthModal() {
+  document.getElementById('authOverlay').classList.add('show');
+}
+function closeAuthModal() {
+  document.getElementById('authOverlay').classList.remove('show');
+}
+function switchAuthTab(tab) {
+  document.getElementById('authTabLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('authTabRegister').classList.toggle('active', tab === 'register');
+  document.getElementById('authLoginPane').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('authRegisterPane').style.display = tab === 'register' ? 'block' : 'none';
+  document.getElementById('authLoginErr').textContent = '';
+  document.getElementById('authRegErr').textContent = '';
+}
+
+function showAuthSuccess(name) {
+  const body = document.getElementById('authModalBody');
+  const firstName = (name || 'Friend').split(' ')[0];
+  body.innerHTML = `
+    <div class="auth-success-wrap">
+      <div class="auth-success-ico">✅</div>
+      <div class="auth-success-title">স্বাগতম, ${firstName}!</div>
+      <div class="auth-success-sub">আপনার WorkHive অ্যাকাউন্ট প্রস্তুত। এখন অ্যাপ ডাউনলোড করুন অথবা ওয়েবসাইটে গিয়ে একই ইমেইল/পাসওয়ার্ড দিয়ে লগইন করে কাজ শুরু করুন।</div>
+      <div class="modal-actions" style="flex-direction:column;gap:10px">
+        <a class="btn-submit" style="text-decoration:none;display:block;text-align:center;padding:13px" href="https://apps.volt.build/25a00368-dae2-44df-bbdb-76d07e6dced6/android.debug.apk" download>📥 অ্যাপ ডাউনলোড করুন</a>
+        <a class="btn-cancel" style="text-decoration:none;display:block;text-align:center;padding:13px" href="https://tinyurl.com/worhive" target="_blank" rel="noopener">🌐 ওয়েবসাইটে যান</a>
+      </div>
+    </div>`;
+}
+
+async function doWebLogin() {
+  const email = document.getElementById('authLoginEmail').value.trim();
+  const pass = document.getElementById('authLoginPass').value;
+  const errEl = document.getElementById('authLoginErr');
+  errEl.textContent = '';
+  if (!email || !pass) { errEl.textContent = '❌ ইমেইল ও পাসওয়ার্ড দিন'; return; }
+  const btn = document.getElementById('authLoginBtn');
+  btn.disabled = true; btn.textContent = 'লগইন হচ্ছে...';
+  try {
+    const { signInWithEmailAndPassword } = window._authFns;
+    const cred = await signInWithEmailAndPassword(window._authAuth, email, pass);
+    showAuthSuccess(cred.user.displayName || email);
+  } catch (e) {
+    const msgs = {
+      'auth/wrong-password': '❌ ভুল পাসওয়ার্ড',
+      'auth/user-not-found': '❌ এই ইমেইলে কোনো অ্যাকাউন্ট নেই',
+      'auth/invalid-email': '❌ ইমেইল ফরম্যাট ভুল',
+      'auth/invalid-credential': '❌ ভুল ইমেইল বা পাসওয়ার্ড',
+      'auth/too-many-requests': '⚠ অনেকবার চেষ্টা করা হয়েছে, একটু পরে চেষ্টা করুন',
+      'auth/network-request-failed': '❌ ইন্টারনেট সংযোগ চেক করুন'
+    };
+    errEl.textContent = msgs[e.code] || ('❌ ' + e.message);
+    btn.disabled = false; btn.textContent = 'লগইন করুন';
+  }
+}
+
+async function doWebRegister() {
+  const name = document.getElementById('authRegName').value.trim();
+  const email = document.getElementById('authRegEmail').value.trim();
+  const phone = document.getElementById('authRegPhone').value.trim();
+  const pass = document.getElementById('authRegPass').value;
+  const ref = document.getElementById('authRegRef').value.trim().toUpperCase();
+  const errEl = document.getElementById('authRegErr');
+  errEl.textContent = '';
+  if (!name) { errEl.textContent = '❌ আপনার নাম লিখুন'; return; }
+  if (!email) { errEl.textContent = '❌ ইমেইল লিখুন'; return; }
+  if (!phone) { errEl.textContent = '❌ ফোন নম্বর লিখুন'; return; }
+  if (!pass || pass.length < 6) { errEl.textContent = '❌ পাসওয়ার্ড কমপক্ষে ৬ ক্যারেক্টার'; return; }
+
+  const btn = document.getElementById('authRegBtn');
+  btn.disabled = true; btn.textContent = 'তৈরি হচ্ছে...';
+  const fns = window._authFns;
+  try {
+    const cred = await fns.createUserWithEmailAndPassword(window._authAuth, email, pass);
+    await fns.updateProfile(cred.user, { displayName: name }).catch(() => {});
+
+    // Create the exact same user-document shape the app itself creates, so
+    // this account behaves identically whether the person opens the app
+    // next or comes back to this website.
+    const refCode = 'WH' + Math.random().toString(36).substr(2, 6).toUpperCase();
+    const userData = {
+      name, username: '', email, phone, bio: '', country: '', photoURL: '',
+      balance: 0, totalEarned: 0, totalWithdrawn: 0, pendingAmount: 0,
+      tasksCompleted: 0, approvedTasks: 0, accuracy: 0, streak: 0, workerLevel: 1,
+      kyc: false, kycStatus: 'pending',
+      referralCode: refCode, referredBy: ref || '', referralCount: 0, referralEarned: 0,
+      gen2Count: 0, gen3Count: 0, gen2Earned: 0, gen3Earned: 0,
+      spinLastUsed: null, isNewUser: true, status: 'active', role: 'user',
+      createdAt: fns.serverTimestamp(), lastActive: fns.serverTimestamp(),
+      deviceInfo: navigator.userAgent || '', loginCount: 1, lastLoginAt: fns.serverTimestamp(),
+      signupSource: 'landing-page'
+    };
+    await fns.setDoc(fns.doc(window._authDb, 'users', cred.user.uid), userData);
+
+    // Apply the same 3-generation referral bonus logic the app uses
+    if (ref) {
+      try {
+        const refQ = fns.query(fns.collection(window._authDb, 'users'), fns.where('referralCode', '==', ref));
+        const refSnap = await fns.getDocs(refQ);
+        refSnap.forEach(async (refDoc) => {
+          fns.updateDoc(refDoc.ref, { referralCount: fns.increment(1), referralEarned: fns.increment(0.5), balance: fns.increment(0.5), totalEarned: fns.increment(0.5) }).catch(() => {});
+        });
+      } catch (e) { console.warn('referral bonus:', e); }
+    }
+
+    showAuthSuccess(name);
+  } catch (e) {
+    const msgs = {
+      'auth/email-already-in-use': '❌ এই ইমেইলে আগে থেকেই অ্যাকাউন্ট আছে — লগইন ট্যাবে যান',
+      'auth/weak-password': '❌ পাসওয়ার্ড দুর্বল',
+      'auth/invalid-email': '❌ ইমেইল ফরম্যাট ভুল',
+      'auth/network-request-failed': '❌ ইন্টারনেট সংযোগ চেক করুন'
+    };
+    errEl.textContent = msgs[e.code] || ('❌ ' + e.message);
+    btn.disabled = false; btn.textContent = 'অ্যাকাউন্ট তৈরি করুন';
+  }
+}
+
+async function doWebGoogleAuth() {
+  try {
+    const fns = window._authFns;
+    const cred = await fns.signInWithPopup(window._authAuth, fns.googleProvider);
+    const user = cred.user;
+    // If this Google account doesn't have a user doc yet, create one
+    const ref = fns.doc(window._authDb, 'users', user.uid);
+    const snap = await fns.getDoc(ref);
+    if (!snap.exists()) {
+      const refCode = 'WH' + Math.random().toString(36).substr(2, 6).toUpperCase();
+      await fns.setDoc(ref, {
+        name: user.displayName || 'WorkHive User', username: '', email: user.email || '',
+        phone: '', bio: '', country: '', photoURL: user.photoURL || '',
+        balance: 0, totalEarned: 0, totalWithdrawn: 0, pendingAmount: 0,
+        tasksCompleted: 0, approvedTasks: 0, accuracy: 0, streak: 0, workerLevel: 1,
+        kyc: false, kycStatus: 'pending',
+        referralCode: refCode, referredBy: '', referralCount: 0, referralEarned: 0,
+        gen2Count: 0, gen3Count: 0, gen2Earned: 0, gen3Earned: 0,
+        spinLastUsed: null, isNewUser: true, status: 'active', role: 'user',
+        createdAt: fns.serverTimestamp(), lastActive: fns.serverTimestamp(),
+        deviceInfo: navigator.userAgent || '', loginCount: 1, lastLoginAt: fns.serverTimestamp(),
+        signupSource: 'landing-page-google'
+      });
+    }
+    showAuthSuccess(user.displayName || user.email);
+  } catch (e) {
+    if (e.code !== 'auth/cancelled-popup-request' && e.code !== 'auth/popup-closed-by-user') {
+      const errEl = document.getElementById('authTabLogin').classList.contains('active')
+        ? document.getElementById('authLoginErr') : document.getElementById('authRegErr');
+      if (errEl) errEl.textContent = '❌ Google লগইন ব্যর্থ হয়েছে';
+    }
+  }
+}
 </script>
 </body>
 </html>
