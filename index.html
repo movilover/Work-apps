@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WorkHive — Download the App</title>
+<meta name="description" content="WorkHive — Bangladesh's micro-earning app. Complete simple tasks, get paid to bKash, Nagad, or USDT.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Bengali:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070707; --bg2:#0d0f0d; --card:#111412; --card-line:#1b1f1c;
+  --green:#00E676; --green-dim:#0c1f13; --gold:#FFC93C;
+  --text:#EFF3EF; --text2:#9AA39C; --text3:#4d554f;
+  --hex-line:rgba(0,230,118,.14);
+  --r:20px;
+  /* task-category colors — match the live app exactly */
+  --cat-social:#448AFF; --cat-app:#00E676; --cat-web:#FF5252;
+  --cat-review:#FFB300; --cat-video:#E040FB; --cat-survey:#00BCD4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:'Inter','Noto Sans Bengali',sans-serif;
+  overflow-x:hidden;
+}
+h1,h2,h3,.disp{font-family:'Space Grotesk','Noto Sans Bengali',sans-serif}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+img{max-width:100%;display:block}
+a{color:inherit}
+
+/* ===== HONEYCOMB BACKGROUND (signature motif) ===== */
+.hex-field{
+  position:absolute; inset:0; z-index:0; pointer-events:none;
+  background-image:
+    linear-gradient(30deg,var(--hex-line) 1px,transparent 1px),
+    linear-gradient(150deg,var(--hex-line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--hex-line) 1px,transparent 1px);
+  background-size:64px 111px;
+  background-position:0 0,0 0,0 0;
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 20%,black 20%,transparent 78%);
+  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 20%,black 20%,transparent 78%);
+  opacity:.55;
+}
+
+/* ===== NAV ===== */
+nav{position:sticky;top:0;z-index:40;backdrop-filter:blur(16px);background:rgba(7,7,7,.75);border-bottom:1px solid var(--card-line)}
+nav .in{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1140px;margin:0 auto;gap:12px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-hex{width:34px;height:34px;background:var(--green);clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.brand-name{font-family:'Space Grotesk';font-weight:700;font-size:17px;letter-spacing:-.2px}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.nav-cta{background:var(--green);color:#001a0a;font-weight:700;font-size:13px;padding:9px 16px;border-radius:10px;text-decoration:none;white-space:nowrap}
+.nav-web{border:1px solid var(--card-line);color:var(--text2);font-weight:700;font-size:13px;padding:9px 16px;border-radius:10px;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.nav-web:hover{border-color:var(--green);color:var(--text)}
+.nav-web svg{width:13px;height:13px}
+
+/* ===== HERO ===== */
+.hero{position:relative;padding:88px 0 60px;text-align:center;overflow:hidden}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--green-dim);border:1px solid rgba(0,230,118,.25);color:var(--green);font-size:12px;font-weight:700;padding:7px 16px;border-radius:30px;margin-bottom:26px;position:relative;z-index:1}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+.hero h1{position:relative;z-index:1;font-size:clamp(34px,6vw,58px);font-weight:700;line-height:1.08;letter-spacing:-1px;max-width:820px;margin:0 auto}
+.hero h1 span{color:var(--green)}
+.hero p.sub{position:relative;z-index:1;max-width:520px;margin:22px auto 8px;color:var(--text2);font-size:16px;line-height:1.7;font-weight:500}
+.hero p.sub.bn{font-family:'Noto Sans Bengali';font-size:15px}
+
+.hero-ctas{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:34px}
+.btn-download{
+  display:inline-flex;align-items:center;gap:12px;background:var(--green);color:#001a0a;
+  font-weight:700;font-size:15.5px;padding:15px 26px;border-radius:14px;text-decoration:none;
+  box-shadow:0 10px 34px rgba(0,230,118,.28); position:relative; overflow:hidden;
+  transition:transform .18s ease; border:none; cursor:pointer;
+}
+.btn-download:hover{transform:translateY(-2px)}
+.btn-download svg{width:22px;height:22px;flex-shrink:0}
+.btn-download .lbl{display:flex;flex-direction:column;align-items:flex-start;line-height:1.25}
+.btn-download .lbl small{font-size:10px;font-weight:600;opacity:.75;letter-spacing:.3px}
+.btn-download .lbl b{font-size:15.5px}
+.btn-website{
+  display:inline-flex;align-items:center;gap:12px;background:transparent;border:1.5px solid var(--card-line);
+  color:var(--text);font-weight:700;font-size:15.5px;padding:15px 26px;border-radius:14px;text-decoration:none;
+  transition:border-color .18s ease,transform .18s ease;
+}
+.btn-website:hover{border-color:var(--green);transform:translateY(-2px)}
+.btn-website svg{width:22px;height:22px;flex-shrink:0;stroke:var(--green)}
+.btn-website .lbl{display:flex;flex-direction:column;align-items:flex-start;line-height:1.25}
+.btn-website .lbl small{font-size:10px;font-weight:600;opacity:.65;letter-spacing:.3px}
+.btn-website .lbl b{font-size:15.5px}
+
+.hero-meta{position:relative;z-index:1;display:flex;flex-wrap:wrap;justify-content:center;gap:26px;margin-top:44px;color:var(--text3);font-size:12.5px;font-weight:600}
+.hero-meta span{display:flex;align-items:center;gap:6px}
+.hero-meta svg{width:14px;height:14px;stroke:var(--text3)}
+
+/* ===== STAT STRIP ===== */
+.stat-strip{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--card-line);border:1px solid var(--card-line);border-radius:18px;overflow:hidden;max-width:760px;margin:56px auto 0}
+.stat-cell{background:var(--card);padding:22px 10px;text-align:center}
+.stat-v{font-family:'Space Grotesk';font-size:22px;font-weight:700;color:var(--green)}
+.stat-l{font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
+
+/* ===== SECTION HEADS ===== */
+.sec{padding:96px 0}
+.sec-head{text-align:center;max-width:600px;margin:0 auto 52px}
+.sec-eyebrow{font-size:11.5px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1.4px;margin-bottom:12px}
+.sec-head h2{font-size:clamp(26px,4vw,38px);font-weight:700;letter-spacing:-.6px;line-height:1.2}
+.sec-head p{color:var(--text2);margin-top:14px;font-size:15px;line-height:1.7;font-family:'Noto Sans Bengali'}
+
+/* ===== SCREENSHOTS — hex-clipped phone frames (signature element) ===== */
+.shots-row{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;align-items:flex-end}
+.shot{width:230px;position:relative}
+.shot .frame{
+  position:relative; background:#0a0a0a; border:2px solid var(--card-line); border-radius:30px;
+  padding:10px; box-shadow:0 30px 70px rgba(0,0,0,.55);
+}
+.shot .screen{border-radius:22px;overflow:hidden;background:#0d0d0d;aspect-ratio:9/19.5;position:relative}
+.shot .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:60px;height:16px;background:#0a0a0a;border-radius:0 0 12px 12px;z-index:5}
+.shot.tall{margin-bottom:0}
+.shot:nth-child(2){transform:translateY(-22px)}
+.shot-cap{text-align:center;margin-top:16px;font-size:12.5px;color:var(--text2);font-weight:600;font-family:'Noto Sans Bengali'}
+
+/* mini mockup UI drawn in CSS (matches real app tokens, not a screenshot) */
+.mock{padding:16px 10px 10px;height:100%;display:flex;flex-direction:column;gap:8px;font-family:'Inter',sans-serif}
+.mock-top{display:flex;align-items:center;gap:7px}
+.mock-av{width:20px;height:20px;border-radius:6px;background:var(--green-dim);border:1px solid rgba(0,230,118,.3);flex-shrink:0}
+.mock-line{height:5px;border-radius:3px;background:#1a1e1a}
+.mock-line.w60{width:60%}.mock-line.w40{width:40%}.mock-line.w80{width:80%}
+.mock-card{background:#12160f;border:1px solid #1b2019;border-radius:11px;padding:9px}
+.mock-bal{font-family:'Space Grotesk';color:var(--green);font-size:17px;font-weight:700;margin:3px 0}
+.mock-pill-row{display:flex;gap:4px;margin-top:7px}
+.mock-pill{flex:1;background:#0e120e;border-radius:7px;padding:5px 3px;text-align:center}
+.mock-pill .v{font-size:8px;font-weight:700;color:var(--gold)}
+.mock-pill .l{font-size:5.5px;color:var(--text3);margin-top:2px;letter-spacing:.3px}
+.mock-task{display:flex;gap:6px;align-items:center;background:#0f130f;border:1px solid #1a1f1a;border-radius:9px;padding:7px}
+.mock-task .ic{width:22px;height:22px;border-radius:7px;flex-shrink:0}
+.mock-task .txt{flex:1;display:flex;flex-direction:column;gap:4px}
+.mock-nav{margin-top:auto;display:flex;justify-content:space-around;align-items:center;padding-top:7px;border-top:1px solid #161915}
+.mock-nav i{width:12px;height:12px;border-radius:4px;background:#1c211c;display:block}
+.mock-nav i.on{background:var(--green)}
+.mock-nav .fab{width:20px;height:20px;border-radius:6px;background:var(--green);margin-top:-14px}
+
+/* ===== HOW IT WORKS ===== */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.step{background:var(--card);border:1px solid var(--card-line);border-radius:18px;padding:24px 20px;position:relative}
+.step .num{font-family:'Space Grotesk';font-size:13px;font-weight:700;color:var(--green);background:var(--green-dim);border:1px solid rgba(0,230,118,.28);width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.step h3{font-size:14.5px;font-weight:700;margin-bottom:8px;font-family:'Noto Sans Bengali'}
+.step p{font-size:12.5px;color:var(--text2);line-height:1.7;font-family:'Noto Sans Bengali'}
+.step-arrow{position:absolute;top:34px;right:-24px;color:var(--text3);font-size:18px;z-index:2}
+
+/* ===== TASK TYPES ===== */
+.task-types{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ttype{background:var(--card);border:1px solid var(--card-line);border-radius:16px;padding:20px;display:flex;gap:13px;align-items:flex-start}
+.ttype .hx{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ttype h4{font-size:14px;font-weight:700;margin-bottom:5px;font-family:'Noto Sans Bengali'}
+.ttype p{font-size:12px;color:var(--text2);line-height:1.6;font-family:'Noto Sans Bengali'}
+
+/* ===== FEATURES ===== */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.feat{background:var(--card);border:1px solid var(--card-line);border-radius:18px;padding:26px 22px;position:relative;overflow:hidden}
+.feat .hx{width:42px;height:42px;background:var(--green-dim);border:1px solid rgba(0,230,118,.28);clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);display:flex;align-items:center;justify-content:center;font-size:19px;margin-bottom:16px}
+.feat h3{font-size:15.5px;font-weight:700;margin-bottom:8px;font-family:'Noto Sans Bengali'}
+.feat p{font-size:13px;color:var(--text2);line-height:1.7;font-family:'Noto Sans Bengali'}
+
+/* ===== REVIEWS ===== */
+.rating-summary{display:flex;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap;margin-bottom:44px}
+.rs-num{font-family:'Space Grotesk';font-size:52px;font-weight:700;color:var(--gold);line-height:1}
+.rs-stars{color:var(--gold);font-size:16px;letter-spacing:2px}
+.rs-count{font-size:12px;color:var(--text3);margin-top:4px;font-family:'Noto Sans Bengali'}
+.review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:34px}
+.review-card{background:var(--card);border:1px solid var(--card-line);border-radius:16px;padding:20px}
+.review-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.review-av{width:34px;height:34px;border-radius:10px;background:var(--green-dim);color:var(--green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+.review-name{font-size:13px;font-weight:700}
+.review-stars{color:var(--gold);font-size:11px}
+.review-text{font-size:13px;color:var(--text2);line-height:1.7;font-family:'Noto Sans Bengali'}
+.review-empty{grid-column:1/-1;text-align:center;color:var(--text3);font-size:13px;padding:20px;font-family:'Noto Sans Bengali'}
+
+.review-cta{text-align:center}
+.btn-review{
+  display:inline-flex;align-items:center;gap:8px;background:transparent;border:1.5px solid var(--gold);
+  color:var(--gold);font-weight:700;font-size:14px;padding:13px 26px;border-radius:14px;cursor:pointer;
+  font-family:inherit;transition:.15s;
+}
+.btn-review:hover{background:rgba(255,201,60,.08)}
+
+/* ===== REVIEW MODAL ===== */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal{background:var(--card);border:1px solid var(--card-line);border-radius:20px;padding:28px;width:100%;max-width:400px;position:relative}
+.modal h3{font-size:18px;font-weight:700;margin-bottom:4px;font-family:'Noto Sans Bengali'}
+.modal p.hint{font-size:12px;color:var(--text3);margin-bottom:18px;font-family:'Noto Sans Bengali'}
+.star-picker{display:flex;gap:6px;font-size:28px;color:#2a2e29;cursor:pointer;margin-bottom:16px}
+.star-picker span.on{color:var(--gold)}
+.modal input,.modal textarea{width:100%;background:#0c0f0c;border:1px solid var(--card-line);border-radius:10px;padding:11px 13px;color:var(--text);font-family:inherit;font-size:13.5px;margin-bottom:12px;outline:none}
+.modal input:focus,.modal textarea:focus{border-color:var(--green)}
+.modal textarea{min-height:80px;resize:vertical}
+.modal-actions{display:flex;gap:10px;margin-top:6px}
+.modal-actions button{flex:1;padding:12px;border-radius:10px;border:none;font-weight:700;font-size:13.5px;cursor:pointer;font-family:inherit}
+.btn-cancel{background:#181c18;color:var(--text2)}
+.btn-submit{background:var(--green);color:#001a0a}
+.modal-close{position:absolute;top:16px;right:18px;cursor:pointer;color:var(--text3);font-size:16px}
+
+/* ===== FAQ ===== */
+.faq-list{max-width:720px;margin:0 auto}
+.faq-item{background:var(--card);border:1px solid var(--card-line);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.faq-q{padding:16px 20px;font-size:13.5px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'Noto Sans Bengali'}
+.faq-q svg{width:16px;height:16px;stroke:var(--text3);flex-shrink:0;transition:transform .2s}
+.faq-item.open .faq-q svg{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease}
+.faq-item.open .faq-a{max-height:200px}
+.faq-a p{padding:0 20px 16px;font-size:12.5px;color:var(--text2);line-height:1.7;font-family:'Noto Sans Bengali'}
+
+/* ===== FINAL CTA ===== */
+.final{text-align:center;padding:100px 0;position:relative}
+.final h2{font-size:clamp(28px,5vw,44px);font-weight:700;letter-spacing:-.6px;max-width:600px;margin:0 auto 14px}
+.final p{color:var(--text2);font-size:15px;margin-bottom:34px;font-family:'Noto Sans Bengali'}
+.final-ctas{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;position:relative;z-index:1}
+
+/* ===== FOOTER ===== */
+footer{border-top:1px solid var(--card-line);padding:32px 0;text-align:center;color:var(--text3);font-size:12px;font-family:'Noto Sans Bengali'}
+
+@media(max-width:860px){
+  .feat-grid{grid-template-columns:1fr}
+  .review-grid{grid-template-columns:1fr}
+  .stat-strip{grid-template-columns:repeat(2,1fr)}
+  .shots-row{gap:16px}
+  .shot{width:150px}
+  .shot:nth-child(2){transform:none}
+  .steps{grid-template-columns:1fr}
+  .step-arrow{display:none}
+  .task-types{grid-template-columns:1fr}
+  .nav-web .lbl-full{display:none}
+}
+
+/* ══════════════ HERO 3D SCENE (trust visual) ══════════════ */
+.scene-wrap{position:relative;height:400px;max-width:920px;margin:0 auto 8px;perspective:1400px}
+.scene{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .3s ease-out}
+
+.device{
+  position:absolute;left:50%;top:50%;width:220px;height:320px;
+  transform:translate(-50%,-50%) rotateY(-10deg) rotateX(6deg) translateZ(40px);
+  background:linear-gradient(160deg,#12160f,#0a0a0a 70%);
+  border:2px solid var(--card-line); border-radius:32px;
+  box-shadow:0 40px 90px rgba(0,0,0,.6), 0 0 0 1px rgba(0,230,118,.06);
+  padding:16px; z-index:5; animation:deviceFloat 6s ease-in-out infinite;
+  display:flex; flex-direction:column;
+}
+@keyframes deviceFloat{
+  0%,100%{ transform:translate(-50%,-50%) rotateY(-10deg) rotateX(6deg) translateZ(40px) translateY(0); }
+  50%{ transform:translate(-50%,-50%) rotateY(-10deg) rotateX(6deg) translateZ(40px) translateY(-14px); }
+}
+.device-notch{width:44px;height:5px;border-radius:4px;background:#1c211c;margin:0 auto 14px}
+.device-bal-label{font-size:9px;color:rgba(0,230,118,.55);font-weight:700;text-transform:uppercase;letter-spacing:.6px;text-align:center}
+.device-bal{font-family:'Space Grotesk';font-size:30px;font-weight:700;color:var(--green);text-align:center;margin:4px 0 14px}
+.device-row{display:flex;align-items:center;gap:8px;background:#0e120e;border:1px solid #1a1f1a;border-radius:12px;padding:9px 11px;margin-bottom:8px}
+.device-row .di{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.device-row .dt{flex:1;height:6px;border-radius:3px;background:#1a1e1a}
+.device-btn{margin-top:auto;background:var(--green);color:#001a0a;font-weight:800;font-size:11.5px;text-align:center;padding:10px;border-radius:10px;font-family:'Noto Sans Bengali'}
+
+.satellite{
+  position:absolute; background:var(--card); border:1px solid var(--card-line); border-radius:16px;
+  padding:12px 14px; box-shadow:0 20px 45px rgba(0,0,0,.5); z-index:4;
+  display:flex; align-items:center; gap:10px; white-space:nowrap;
+}
+.satellite .s-ico{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.satellite .s-txt b{display:block;font-size:12px;font-weight:700;font-family:'Noto Sans Bengali'}
+.satellite .s-txt span{display:block;font-size:10px;color:var(--text3);margin-top:1px}
+
+.sat-social{ left:2%; top:14%; transform:rotateY(8deg) translateZ(10px); animation:floatA 5.5s ease-in-out infinite; }
+.sat-app{ left:6%; bottom:12%; transform:rotateY(10deg) translateZ(-10px); animation:floatB 6.5s ease-in-out infinite; }
+.sat-review{ right:3%; top:10%; transform:rotateY(-8deg) translateZ(0px); animation:floatB 6s ease-in-out infinite; }
+.sat-cashout{ right:1%; bottom:8%; transform:rotateY(-10deg) translateZ(20px); animation:floatA 5s ease-in-out infinite; }
+
+@keyframes floatA{0%,100%{ margin-top:0 } 50%{ margin-top:-12px }}
+@keyframes floatB{0%,100%{ margin-top:0 } 50%{ margin-top:10px }}
+
+.cashout-flow{display:flex;align-items:center;gap:4px}
+.cashout-coin{width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe27a,var(--gold) 60%);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#3a2a00;animation:coinMove 1.8s ease-in-out infinite}
+@keyframes coinMove{0%{transform:translateX(0);opacity:1}70%{transform:translateX(14px);opacity:0}100%{transform:translateX(14px);opacity:0}}
+.cashout-arrow{color:var(--text3);font-size:13px}
+
+.spark{position:absolute;border-radius:50%;background:var(--green);opacity:.5;filter:blur(.5px);animation:sparkFloat 4s ease-in-out infinite}
+@keyframes sparkFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+
+@media(max-width:760px){
+  .scene-wrap{height:520px}
+  .device{width:190px;height:280px}
+  .satellite{padding:9px 11px}
+  .satellite .s-txt b{font-size:11px}
+  .sat-social{left:4%;top:6%}
+  .sat-app{left:4%;bottom:22%}
+  .sat-review{right:4%;top:6%}
+  .sat-cashout{right:4%;bottom:22%}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="in">
+    <div class="brand">
+      <div class="brand-hex">🐝</div>
+      <div class="brand-name">WorkHive</div>
+    </div>
+    <div class="nav-actions">
+      <a href="https://tinyurl.com/worhive" target="_blank" rel="noopener" class="nav-web">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 0 1 0 18M12 3a13 13 0 0 0 0 18"/></svg>
+        <span class="lbl-full">ওয়েবসাইট</span>
+      </a>
+      <a href="#download" class="nav-cta">ডাউনলোড করুন</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hex-field"></div>
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span> Now available for Android</div>
+
+    <div class="scene-wrap" id="sceneWrap">
+      <div class="scene" id="scene">
+        <div class="spark" style="width:6px;height:6px;left:22%;top:6%;animation-delay:.2s"></div>
+        <div class="spark" style="width:4px;height:4px;left:78%;top:20%;animation-delay:1.1s"></div>
+        <div class="spark" style="width:5px;height:5px;left:14%;top:70%;animation-delay:.6s"></div>
+        <div class="spark" style="width:4px;height:4px;left:85%;top:68%;animation-delay:1.6s"></div>
+
+        <div class="satellite sat-social">
+          <div class="s-ico" style="background:rgba(68,138,255,.14);color:#448AFF">👍</div>
+          <div class="s-txt"><b>সোশ্যাল মিডিয়া টাস্ক</b><span>+$0.90 · অনুমোদিত</span></div>
+        </div>
+
+        <div class="satellite sat-app">
+          <div class="s-ico" style="background:rgba(0,230,118,.14);color:#00E676">📲</div>
+          <div class="s-txt"><b>অ্যাপ ডাউনলোড</b><span>+$0.50 · অনুমোদিত</span></div>
+        </div>
+
+        <div class="satellite sat-review">
+          <div class="s-ico" style="background:rgba(255,179,0,.14);color:#FFB300">⭐</div>
+          <div class="s-txt"><b>রিভিউ টাস্ক</b><span>+$0.35 · অনুমোদিত</span></div>
+        </div>
+
+        <div class="satellite sat-cashout">
+          <div class="s-ico" style="background:rgba(0,230,118,.14);color:#00E676">📤</div>
+          <div class="s-txt">
+            <b>bKash-এ উইথড্র</b>
+            <span class="cashout-flow">ব্যালেন্স <span class="cashout-arrow">→</span> <span class="cashout-coin">৳</span> bKash</span>
+          </div>
+        </div>
+
+        <div class="device">
+          <div class="device-notch"></div>
+          <div class="device-bal-label">Available Balance</div>
+          <div class="device-bal">$14.62</div>
+          <div class="device-row"><div class="di" style="background:linear-gradient(135deg,#448AFF,#2962FF)">👍</div><div class="dt"></div></div>
+          <div class="device-row"><div class="di" style="background:linear-gradient(135deg,#00E676,#00C853)">📲</div><div class="dt"></div></div>
+          <div class="device-row"><div class="di" style="background:linear-gradient(135deg,#FFB300,#FF6F00)">⭐</div><div class="dt"></div></div>
+          <div class="device-btn">⬆️ উইথড্র করুন</div>
+        </div>
+      </div>
+    </div>
+
+    <h1>ছোট ছোট টাস্ক করুন,<br><span>সরাসরি ব্যালেন্সে টাকা আয়</span> করুন</h1>
+    <p class="sub bn">WorkHive দিয়ে সোশ্যাল মিডিয়া টাস্ক, অ্যাপ ডাউনলোড, রিভিউ ও রেফারেল থেকে আয় করুন — bKash, Nagad ও USDT-তে সরাসরি উইথড্র করুন।</p>
+
+    <div class="hero-ctas" id="download">
+      <a class="btn-download" href="https://apps.volt.build/25a00368-dae2-44df-bbdb-76d07e6dced6/android.debug.apk" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#001a0a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13m0 0l-4.5-4.5M12 16l4.5-4.5"/><path d="M4 19h16"/></svg>
+        <span class="lbl"><small>Direct APK Download</small><b>Android-এ ইনস্টল করুন</b></span>
+      </a>
+      <a class="btn-website" href="https://tinyurl.com/worhive" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 0 1 0 18M12 3a13 13 0 0 0 0 18"/></svg>
+        <span class="lbl"><small>No install needed</small><b>ব্রাউজারে ওয়েবসাইট খুলুন</b></span>
+      </a>
+    </div>
+
+    <div class="hero-meta">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg> Google Play লাগে না</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg> Android 8.0+</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 4v6c0 5-3 8-7 10-4-2-7-5-7-10V6z"/></svg> এডমিন-ভেরিফায়েড টাস্ক</span>
+    </div>
+
+    <div class="stat-strip">
+      <div class="stat-cell"><div class="stat-v" id="stUsers">—</div><div class="stat-l">Active Workers</div></div>
+      <div class="stat-cell"><div class="stat-v">৩</div><div class="stat-l">Payout Methods</div></div>
+      <div class="stat-cell"><div class="stat-v">২৪–৪৮ঘ</div><div class="stat-l">Withdrawal Time</div></div>
+      <div class="stat-cell"><div class="stat-v" id="stRating">নতুন</div><div class="stat-l">User Rating</div></div>
+    </div>
+  </div>
+</header>
+
+<section class="sec" id="screens">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Inside the app</div>
+      <h2>আপনার হোম, টাস্ক ও ওয়ালেট<br>এক জায়গায়</h2>
+    </div>
+    <div class="shots-row">
+      <div class="shot">
+        <div class="frame"><div class="screen"><div class="notch"></div>
+          <div class="mock">
+            <div class="mock-top"><div class="mock-av"></div><div style="flex:1"><div class="mock-line w40"></div></div></div>
+            <div class="mock-card">
+              <div class="mock-line w60" style="background:#173"></div>
+              <div class="mock-bal">$14.62</div>
+              <div class="mock-pill-row"><div class="mock-pill"><div class="v">$0</div><div class="l">PEND</div></div><div class="mock-pill"><div class="v">$32</div><div class="l">EARN</div></div><div class="mock-pill"><div class="v">$18</div><div class="l">OUT</div></div></div>
+            </div>
+            <div class="mock-task"><div class="ic" style="background:linear-gradient(135deg,#448AFF,#2962FF)"></div><div class="txt"><div class="mock-line w80"></div><div class="mock-line w40"></div></div></div>
+            <div class="mock-task"><div class="ic" style="background:linear-gradient(135deg,#00E676,#00C853)"></div><div class="txt"><div class="mock-line w60"></div><div class="mock-line w40"></div></div></div>
+            <div class="mock-nav"><i class="on"></i><i></i><div class="fab"></div><i></i><i></i></div>
+          </div>
+        </div></div>
+        <div class="shot-cap">হোম — ব্যালেন্স ওভারভিউ</div>
+      </div>
+      <div class="shot">
+        <div class="frame"><div class="screen"><div class="notch"></div>
+          <div class="mock">
+            <div class="mock-top"><div class="mock-line w40"></div></div>
+            <div class="mock-task"><div class="ic" style="background:linear-gradient(135deg,#E040FB,#AA00FF)"></div><div class="txt"><div class="mock-line w80"></div><div class="mock-line w40"></div></div></div>
+            <div class="mock-task"><div class="ic" style="background:linear-gradient(135deg,#FFB300,#FF6F00)"></div><div class="txt"><div class="mock-line w80"></div><div class="mock-line w40"></div></div></div>
+            <div class="mock-task"><div class="ic" style="background:linear-gradient(135deg,#00BCD4,#006064)"></div><div class="txt"><div class="mock-line w80"></div><div class="mock-line w40"></div></div></div>
+            <div class="mock-task"><div class="ic" style="background:linear-gradient(135deg,#448AFF,#2962FF)"></div><div class="txt"><div class="mock-line w80"></div><div class="mock-line w40"></div></div></div>
+            <div class="mock-task"><div class="ic" style="background:linear-gradient(135deg,#FF5252,#D50000)"></div><div class="txt"><div class="mock-line w80"></div><div class="mock-line w40"></div></div></div>
+            <div class="mock-nav"><i></i><i class="on"></i><div class="fab"></div><i></i><i></i></div>
+          </div>
+        </div></div>
+        <div class="shot-cap">টাস্ক — নতুন কাজ খুঁজুন</div>
+      </div>
+      <div class="shot">
+        <div class="frame"><div class="screen"><div class="notch"></div>
+          <div class="mock">
+            <div class="mock-top"><div class="mock-line w40"></div></div>
+            <div class="mock-card" style="text-align:center;padding:16px 8px">
+              <div class="mock-line w40" style="margin:0 auto 8px"></div>
+              <div class="mock-bal" style="font-size:22px">$14.62</div>
+              <div class="mock-line w60" style="margin:8px auto 0"></div>
+            </div>
+            <div class="mock-pill-row" style="margin-top:2px">
+              <div class="mock-pill" style="padding:8px 3px">📱</div>
+              <div class="mock-pill" style="padding:8px 3px">💳</div>
+              <div class="mock-pill" style="padding:8px 3px">₮</div>
+            </div>
+            <div class="mock-card"><div class="mock-line w80"></div><div class="mock-line w40" style="margin-top:8px"></div></div>
+            <div class="mock-nav"><i></i><i></i><div class="fab"></div><i class="on"></i><i></i></div>
+          </div>
+        </div></div>
+        <div class="shot-cap">ওয়ালেট — bKash/Nagad/USDT</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Getting started</div>
+      <h2>কীভাবে কাজ করবেন</h2>
+      <p>মাত্র ৪ ধাপে রেজিস্ট্রেশন থেকে উইথড্র পর্যন্ত পুরো প্রসেসটা এখানে দেখানো হলো।</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">১</div>
+        <h3>অ্যাকাউন্ট খুলুন</h3>
+        <p>নাম, ইমেইল ও ফোন নম্বর দিয়ে ১ মিনিটে রেজিস্ট্রেশন করুন — চাইলে বন্ধুর রেফারেল কোডও ব্যবহার করতে পারেন।</p>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="step">
+        <div class="num">২</div>
+        <h3>টাস্ক বেছে নিন</h3>
+        <p>Tasks ট্যাব থেকে সোশ্যাল মিডিয়া, অ্যাপ ডাউনলোড, রিভিউ বা সার্ভে টাস্ক বেছে নিন এবং নির্দেশনা অনুযায়ী কাজ শেষ করুন।</p>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="step">
+        <div class="num">৩</div>
+        <h3>প্রুফ সাবমিট করুন</h3>
+        <p>কাজ শেষ হলে স্ক্রিনশট বা নোট সাবমিট করুন। এডমিন যাচাই করে অনুমোদন করলে ব্যালেন্সে টাকা যোগ হয়ে যাবে।</p>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="step">
+        <div class="num">৪</div>
+        <h3>উইথড্র করুন</h3>
+        <p>নির্ধারিত মিনিমাম ব্যালেন্স হলে bKash, Nagad বা USDT-তে উইথড্র রিকোয়েস্ট দিন — ২৪–৪৮ ঘণ্টায় প্রসেস হয়ে যাবে।</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Task categories</div>
+      <h2>কী ধরনের কাজ থাকে</h2>
+      <p>প্রতিটি টাস্ক এডমিন অনুমোদনের পরই লাইভ হয় — কাজের ধরন অনুযায়ী কয়েকটি ক্যাটাগরি এখানে দেওয়া হলো।</p>
+    </div>
+    <div class="task-types">
+      <div class="ttype">
+        <div class="hx" style="background:rgba(68,138,255,.12);color:var(--cat-social)">👍</div>
+        <div><h4>সোশ্যাল মিডিয়া</h4><p>ফেসবুক পেজ/গ্রুপে লাইক, কমেন্ট, শেয়ার বা ফলো করার মতো ছোট ছোট কাজ।</p></div>
+      </div>
+      <div class="ttype">
+        <div class="hx" style="background:rgba(0,230,118,.12);color:var(--cat-app)">📲</div>
+        <div><h4>অ্যাপ ডাউনলোড</h4><p>নির্দিষ্ট অ্যাপ ইনস্টল করে ওপেন করলেই টাস্ক সম্পন্ন হয়ে যায়।</p></div>
+      </div>
+      <div class="ttype">
+        <div class="hx" style="background:rgba(255,82,82,.12);color:var(--cat-web)">🌐</div>
+        <div><h4>ওয়েবসাইট ভিজিট</h4><p>নির্দিষ্ট লিংকে ভিজিট করলেই টাস্ক অটোমেটিক সম্পন্ন হয়ে যায়, কোনো প্রুফ লাগে না।</p></div>
+      </div>
+      <div class="ttype">
+        <div class="hx" style="background:rgba(255,179,0,.12);color:var(--cat-review)">⭐</div>
+        <div><h4>রিভিউ / রেটিং</h4><p>প্লে স্টোর বা ওয়েবসাইটে সততার সাথে রিভিউ ও রেটিং দিলে রিওয়ার্ড পাবেন।</p></div>
+      </div>
+      <div class="ttype">
+        <div class="hx" style="background:rgba(224,64,251,.12);color:var(--cat-video)">▶️</div>
+        <div><h4>ভিডিও দেখা</h4><p>নির্ধারিত সময় পর্যন্ত ভিডিও দেখলে সেই টাস্কের রিওয়ার্ড পেয়ে যাবেন।</p></div>
+      </div>
+      <div class="ttype">
+        <div class="hx" style="background:rgba(0,188,212,.12);color:var(--cat-survey)">📝</div>
+        <div><h4>সার্ভে</h4><p>ছোট প্রশ্নপত্র পূরণ করে মতামত দিন এবং রিওয়ার্ড অর্জন করুন।</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Why WorkHive</div>
+      <h2>আয় শুরু করা সহজ</h2>
+    </div>
+    <div class="feat-grid">
+      <div class="feat">
+        <div class="hx">✅</div>
+        <h3>এডমিন-ভেরিফায়েড টাস্ক</h3>
+        <p>প্রতিটি টাস্ক এডমিন অনুমোদনের পরই লাইভ হয় — কোনো স্ক্যাম বা ভুয়া টাস্ক নেই।</p>
+      </div>
+      <div class="feat">
+        <div class="hx">👥</div>
+        <h3>৩-জেনারেশন রেফারেল</h3>
+        <p>বন্ধুদের ইনভাইট করে ৩ লেভেল পর্যন্ত পাসিভ ইনকাম করুন — নেটওয়ার্ক যত বড়, আয় তত বেশি।</p>
+      </div>
+      <div class="feat">
+        <div class="hx">⚡</div>
+        <h3>দ্রুত পেমেন্ট</h3>
+        <p>bKash, Nagad ও USDT-তে ২৪–৪৮ ঘণ্টায় উইথড্রয়াল প্রসেস হয় — কোনো লুকানো ফি নেই।</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">User reviews</div>
+      <h2>ইউজাররা যা বলছেন</h2>
+    </div>
+    <div class="rating-summary">
+      <div>
+        <div class="rs-num" id="ratingAvg">—</div>
+        <div class="rs-stars" id="ratingStars">☆☆☆☆☆</div>
+        <div class="rs-count" id="ratingCount">লোড হচ্ছে…</div>
+      </div>
+    </div>
+    <div class="review-grid" id="reviewGrid">
+      <div class="review-empty">রিভিউ লোড হচ্ছে…</div>
+    </div>
+    <div class="review-cta">
+      <button class="btn-review" onclick="openReviewModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+        রিভিউ দিন
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">FAQ</div>
+      <h2>সচরাচর জিজ্ঞাসা</h2>
+    </div>
+    <div class="faq-list" id="faqList">
+      <div class="faq-item">
+        <div class="faq-q">টাকা তুলতে কত সময় লাগে?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-a"><p>এডমিন উইথড্রয়াল রিকোয়েস্ট অনুমোদন করার পর ২৪–৪৮ ঘণ্টার মধ্যে bKash, Nagad বা USDT-তে টাকা পাঠানো হয়।</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">টাস্ক সম্পন্ন করলে কি সাথে সাথে টাকা পাই?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-a"><p>প্রুফ-ভিত্তিক টাস্কে না — প্রুফ সাবমিট করার পর এডমিন যাচাই করে অনুমোদন করলে ব্যালেন্সে টাকা যোগ হয়। ওয়েবসাইট ভিজিট টাস্কে অটোমেটিক ক্রেডিট হয়।</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">রেফারেল থেকে কীভাবে আয় করব?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-a"><p>আপনার রেফারেল কোড দিয়ে কেউ জয়েন করলে আপনি বোনাস পাবেন — এমনকি তার রেফার করা মানুষ থেকেও ৩ জেনারেশন পর্যন্ত আয় হবে।</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">অ্যাপটা কি Google Play থেকে ইনস্টল করতে হবে?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-a"><p>না — এই পেজ থেকে সরাসরি APK ডাউনলোড করে ইনস্টল করা যায়, অথবা ব্রাউজারে ওয়েবসাইট বাটনে ক্লিক করে সরাসরি ব্যবহার করা যায়, কোনো ইনস্টল ছাড়াই।</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="hex-field" style="opacity:.35"></div>
+  <div class="wrap" style="position:relative;z-index:1">
+    <h2>আজই শুরু করুন, আজই আয় শুরু করুন</h2>
+    <p>ফ্রি — একাউন্ট খুলতে ১ মিনিট — Google Play লাগে না</p>
+    <div class="final-ctas">
+      <a class="btn-download" href="https://apps.volt.build/25a00368-dae2-44df-bbdb-76d07e6dced6/android.debug.apk" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#001a0a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13m0 0l-4.5-4.5M12 16l4.5-4.5"/><path d="M4 19h16"/></svg>
+        <span class="lbl"><small>Direct APK Download</small><b>WorkHive ডাউনলোড করুন</b></span>
+      </a>
+      <a class="btn-website" href="https://tinyurl.com/worhive" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 0 1 0 18M12 3a13 13 0 0 0 0 18"/></svg>
+        <span class="lbl"><small>No install needed</small><b>ওয়েবসাইট খুলুন</b></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">🐝 WorkHive — সব ডিপোজিট, উইথড্রয়াল ও টাস্ক এডমিন অনুমোদনে সম্পন্ন হয়। © <span id="yr"></span></div>
+</footer>
+
+<!-- REVIEW MODAL -->
+<div class="modal-overlay" id="reviewOverlay">
+  <div class="modal">
+    <div class="modal-close" onclick="closeReviewModal()">✕</div>
+    <h3>আপনার অভিজ্ঞতা শেয়ার করুন</h3>
+    <p class="hint">আপনার রিভিউ এই পেজে সবাই দেখতে পাবে</p>
+    <div class="star-picker" id="starPicker">
+      <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
+    </div>
+    <input type="text" id="revName" placeholder="আপনার নাম">
+    <textarea id="revText" placeholder="আপনার মতামত লিখুন…"></textarea>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeReviewModal()">বাতিল</button>
+      <button class="btn-submit" onclick="submitReview()">পাঠান</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, serverTimestamp, getCountFromServer } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+// Same Firebase project WorkHive's app & admin panel already use — reviews
+// and stats shown here are read live from that project, nothing is hardcoded.
+const firebaseConfig = {
+  apiKey: "AIzaSyCeA-269WRHJCehg9Z__tlre_EbZcfanlY",
+  authDomain: "workhive-35207.firebaseapp.com",
+  projectId: "workhive-35207",
+  storageBucket: "workhive-35207.firebasestorage.app",
+  messagingSenderId: "567915693960",
+  appId: "1:567915693960:web:db6b3c3165c125c8d51c3d"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+signInAnonymously(auth).catch(() => {});
+
+window._selectedStars = 5;
+window.openReviewModal = () => document.getElementById('reviewOverlay').classList.add('show');
+window.closeReviewModal = () => document.getElementById('reviewOverlay').classList.remove('show');
+
+document.getElementById('starPicker').addEventListener('click', (e) => {
+  const v = e.target.dataset.v;
+  if (!v) return;
+  window._selectedStars = parseInt(v);
+  paintStars();
+});
+function paintStars() {
+  document.querySelectorAll('#starPicker span').forEach(s => s.classList.toggle('on', parseInt(s.dataset.v) <= window._selectedStars));
+}
+paintStars();
+
+window.submitReview = async function () {
+  const name = document.getElementById('revName').value.trim() || 'WorkHive User';
+  const text = document.getElementById('revText').value.trim();
+  if (!text) { alert('মতামত লিখুন'); return; }
+  try {
+    await addDoc(collection(db, 'appReviews'), {
+      name, text, stars: window._selectedStars, createdAt: serverTimestamp(), _ts: Date.now()
+    });
+    document.getElementById('revName').value = '';
+    document.getElementById('revText').value = '';
+    closeReviewModal();
+    loadReviews();
+  } catch (e) {
+    console.warn('Review submit failed:', e);
+    alert('পাঠাতে সমস্যা হয়েছে — আবার চেষ্টা করুন');
+  }
+};
+
+const nameColors = ['#00E676','#448AFF','#E040FB','#FFB300','#FF5252','#00BCD4'];
+function colorFor(n){ return nameColors[(n||'A').charCodeAt(0) % nameColors.length]; }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+async function loadReviews() {
+  const grid = document.getElementById('reviewGrid');
+  try {
+    const snap = await getDocs(query(collection(db, 'appReviews'), orderBy('_ts', 'desc'), limit(9)));
+    const list = [];
+    snap.forEach(d => list.push(d.data()));
+    if (!list.length) {
+      grid.innerHTML = '<div class="review-empty">এখনো কোনো রিভিউ নেই — প্রথম রিভিউটি আপনার!</div>';
+      document.getElementById('ratingAvg').textContent = '—';
+      document.getElementById('ratingCount').textContent = 'কোনো রিভিউ নেই';
+      document.getElementById('stRating').textContent = 'নতুন';
+      return;
+    }
+    grid.innerHTML = list.map(r => {
+      const initial = (r.name || 'W').charAt(0).toUpperCase();
+      const c = colorFor(r.name);
+      const stars = '★'.repeat(r.stars || 5) + '☆'.repeat(5 - (r.stars || 5));
+      return `<div class="review-card">
+        <div class="review-top">
+          <div class="review-av" style="background:${c}22;color:${c}">${initial}</div>
+          <div><div class="review-name">${esc(r.name)}</div><div class="review-stars">${stars}</div></div>
+        </div>
+        <div class="review-text">${esc(r.text)}</div>
+      </div>`;
+    }).join('');
+    const avg = list.reduce((a, r) => a + (r.stars || 5), 0) / list.length;
+    document.getElementById('ratingAvg').textContent = avg.toFixed(1);
+    document.getElementById('ratingStars').textContent = '★'.repeat(Math.round(avg)) + '☆'.repeat(5 - Math.round(avg));
+    document.getElementById('ratingCount').textContent = list.length + ' জন রিভিউ দিয়েছেন';
+    document.getElementById('stRating').textContent = avg.toFixed(1) + '★';
+  } catch (e) {
+    console.warn('loadReviews failed:', e);
+    grid.innerHTML = '<div class="review-empty">রিভিউ লোড করা যায়নি</div>';
+  }
+}
+loadReviews();
+
+// Real, live user count from Firestore — no placeholder numbers.
+(async () => {
+  try {
+    const usersSnap = await getCountFromServer(collection(db, 'users'));
+    const n = usersSnap.data().count || 0;
+    document.getElementById('stUsers').textContent = n > 0 ? n.toLocaleString() : 'নতুন';
+  } catch (e) {
+    document.getElementById('stUsers').textContent = '—';
+  }
+})();
+
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// FAQ accordion
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.querySelector('.faq-q').addEventListener('click', () => {
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+</script>
+
+<script>
+// Subtle parallax tilt on the hero 3D scene — desktop pointer only, untouched on mobile
+(function () {
+  const scene = document.getElementById('scene');
+  const wrap = document.getElementById('sceneWrap');
+  if (!scene || !wrap) return;
+  if (window.matchMedia('(pointer: fine)').matches) {
+    wrap.addEventListener('mousemove', (e) => {
+      const rect = wrap.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      scene.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 8}deg)`;
+    });
+    wrap.addEventListener('mouseleave', () => {
+      scene.style.transform = 'rotateY(0deg) rotateX(0deg)';
+    });
+  }
+})();
+</script>
+</body>
+</html>
