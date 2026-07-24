@@ -46,11 +46,11 @@ a{color:inherit}
 
 /* ===== NAV ===== */
 nav{position:sticky;top:0;z-index:40;backdrop-filter:blur(16px);background:rgba(7,7,7,.75);border-bottom:1px solid var(--card-line)}
-nav .in{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1140px;margin:0 auto;gap:12px}
+nav .in{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1140px;margin:0 auto;gap:12px;flex-wrap:wrap;row-gap:10px}
 .brand{display:flex;align-items:center;gap:10px}
 .brand-hex{width:34px;height:34px;background:var(--green);clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .brand-name{font-family:'Space Grotesk';font-weight:700;font-size:17px;letter-spacing:-.2px}
-.nav-actions{display:flex;align-items:center;gap:8px}
+.nav-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end;flex:1 1 auto}
 .nav-cta{background:var(--green);color:#001a0a;font-weight:700;font-size:13px;padding:9px 16px;border-radius:10px;text-decoration:none;white-space:nowrap}
 .nav-login-plain{border:1px solid var(--card-line);background:transparent;color:var(--text);font-weight:700;font-size:13px;padding:9px 16px;border-radius:10px;cursor:pointer;font-family:inherit;white-space:nowrap;transition:border-color .15s,color .15s}
 .nav-login-plain:hover{border-color:var(--green);color:var(--green)}
@@ -250,6 +250,14 @@ footer{border-top:1px solid var(--card-line);padding:32px 0;text-align:center;co
   .steps{grid-template-columns:1fr}
   .step-arrow{display:none}
   .task-types{grid-template-columns:1fr}
+  nav .in{padding:12px 16px}
+  .nav-actions{gap:6px}
+  .nav-login-plain,.nav-register-plain,.nav-cta{font-size:12px;padding:8px 12px}
+}
+
+@media(max-width:400px){
+  .nav-actions{width:100%;justify-content:space-between}
+  .nav-login-plain,.nav-register-plain,.nav-cta{flex:1;text-align:center;padding:8px 6px}
 }
 
 /* ══════════════ HERO 3D SCENE (trust visual) ══════════════ */
@@ -909,18 +917,10 @@ function switchAuthTab(tab) {
 }
 
 function showAuthSuccess(name) {
-  const body = document.getElementById('authModalBody');
-  const firstName = (name || 'Friend').split(' ')[0];
-  body.innerHTML = `
-    <div class="auth-success-wrap">
-      <div class="auth-success-ico">✅</div>
-      <div class="auth-success-title">স্বাগতম, ${firstName}!</div>
-      <div class="auth-success-sub">আপনার WorkHive অ্যাকাউন্ট প্রস্তুত। এখন অ্যাপ ডাউনলোড করুন অথবা ওয়েবসাইটে গিয়ে একই ইমেইল/পাসওয়ার্ড দিয়ে লগইন করে কাজ শুরু করুন।</div>
-      <div class="modal-actions" style="flex-direction:column;gap:10px">
-        <a class="btn-submit" style="text-decoration:none;display:block;text-align:center;padding:13px" href="https://apps.volt.build/25a00368-dae2-44df-bbdb-76d07e6dced6/android.debug.apk" download>📥 অ্যাপ ডাউনলোড করুন</a>
-        <a class="btn-cancel" style="text-decoration:none;display:block;text-align:center;padding:13px" href="https://tinyurl.com/worhive" target="_blank" rel="noopener">🌐 ওয়েবসাইটে যান</a>
-      </div>
-    </div>`;
+  // Login/registration succeeded — just close the modal and let the person
+  // land straight back on this homepage. No download/website popup, and the
+  // login/register form stays intact inside the modal for next time.
+  closeAuthModal();
 }
 
 async function doWebLogin() {
@@ -935,6 +935,9 @@ async function doWebLogin() {
     const { signInWithEmailAndPassword } = window._authFns;
     const cred = await signInWithEmailAndPassword(window._authAuth, email, pass);
     showAuthSuccess(cred.user.displayName || email);
+    document.getElementById('authLoginEmail').value = '';
+    document.getElementById('authLoginPass').value = '';
+    btn.disabled = false; btn.textContent = 'লগইন করুন';
   } catch (e) {
     const msgs = {
       'auth/wrong-password': '❌ ভুল পাসওয়ার্ড',
@@ -999,6 +1002,12 @@ async function doWebRegister() {
     }
 
     showAuthSuccess(name);
+    document.getElementById('authRegName').value = '';
+    document.getElementById('authRegEmail').value = '';
+    document.getElementById('authRegPhone').value = '';
+    document.getElementById('authRegPass').value = '';
+    document.getElementById('authRegRef').value = '';
+    btn.disabled = false; btn.textContent = 'অ্যাকাউন্ট তৈরি করুন';
   } catch (e) {
     const msgs = {
       'auth/email-already-in-use': '❌ এই ইমেইলে আগে থেকেই অ্যাকাউন্ট আছে — লগইন ট্যাবে যান',
