@@ -331,7 +331,7 @@ footer{border-top:1px solid var(--card-line);padding:32px 0;text-align:center;co
       <div class="brand-name">WorkHive</div>
     </div>
     <div class="nav-actions">
-      <button class="nav-login-plain" id="navLoginBtn" onclick="openAuthModal('login')">লগইন</button>
+      <button class="nav-login-plain" id="navLoginBtn" onclick="handleNavLoginClick()">লগইন</button>
       <button class="nav-register-plain" id="navRegisterBtn" onclick="openAuthModal('register')">রেজিস্ট্রেশন</button>
       <a href="#download" class="nav-cta">ডাউনলোড করুন</a>
     </div>
@@ -768,18 +768,31 @@ window._authFns = {
 signInAnonymously(auth).catch(() => {});
 
 // Track real (non-anonymous) auth state to update the nav "লগইন" button
+window._isLoggedIn = false;
 onAuthStateChanged(auth, (user) => {
   const btn = document.getElementById('navLoginBtn');
   if (!btn) return;
   if (user && !user.isAnonymous) {
+    window._isLoggedIn = true;
     btn.classList.add('logged-in');
     const shortName = (user.displayName || user.email || 'Account').split(' ')[0];
     btn.textContent = '✓ ' + shortName;
+    btn.title = 'লগ-আউট করতে ক্লিক করুন';
   } else {
+    window._isLoggedIn = false;
     btn.classList.remove('logged-in');
     btn.textContent = 'লগইন';
+    btn.title = '';
   }
 });
+
+window.handleNavLoginClick = function () {
+  if (window._isLoggedIn) {
+    signOut(window._authAuth).catch(() => {});
+  } else {
+    openAuthModal('login');
+  }
+};
 
 window._selectedStars = 5;
 window.openReviewModal = () => document.getElementById('reviewOverlay').classList.add('show');
@@ -917,10 +930,17 @@ function switchAuthTab(tab) {
 }
 
 function showAuthSuccess(name) {
-  // Login/registration succeeded — just close the modal and let the person
-  // land straight back on this homepage. No download/website popup, and the
-  // login/register form stays intact inside the modal for next time.
-  closeAuthModal();
+  const body = document.getElementById('authModalBody');
+  body.innerHTML = `
+    <div class="auth-success-wrap">
+      <div class="auth-success-ico">✅</div>
+      <div class="auth-success-title">স্বাগতম!</div>
+      <div class="auth-success-sub">আপনার WorkHive অ্যাকাউন্ট প্রস্তুত। এখন অ্যাপ ডাউনলোড করুন অথবা ওয়েবসাইটে গিয়ে একই ইমেইল/পাসওয়ার্ড দিয়ে লগইন করে কাজ শুরু করুন।</div>
+      <div class="modal-actions" style="flex-direction:column;gap:10px">
+        <a class="btn-submit" style="text-decoration:none;display:block;text-align:center;padding:13px" href="https://apps.volt.build/25a00368-dae2-44df-bbdb-76d07e6dced6/android.debug.apk" download>📥 অ্যাপ ডাউনলোড করুন</a>
+        <a class="btn-cancel" style="text-decoration:none;display:block;text-align:center;padding:13px" href="https://tinyurl.com/worhive" target="_blank" rel="noopener">🌐 ওয়েবসাইটে যান</a>
+      </div>
+    </div>`;
 }
 
 async function doWebLogin() {
@@ -935,9 +955,6 @@ async function doWebLogin() {
     const { signInWithEmailAndPassword } = window._authFns;
     const cred = await signInWithEmailAndPassword(window._authAuth, email, pass);
     showAuthSuccess(cred.user.displayName || email);
-    document.getElementById('authLoginEmail').value = '';
-    document.getElementById('authLoginPass').value = '';
-    btn.disabled = false; btn.textContent = 'লগইন করুন';
   } catch (e) {
     const msgs = {
       'auth/wrong-password': '❌ ভুল পাসওয়ার্ড',
@@ -1002,12 +1019,6 @@ async function doWebRegister() {
     }
 
     showAuthSuccess(name);
-    document.getElementById('authRegName').value = '';
-    document.getElementById('authRegEmail').value = '';
-    document.getElementById('authRegPhone').value = '';
-    document.getElementById('authRegPass').value = '';
-    document.getElementById('authRegRef').value = '';
-    btn.disabled = false; btn.textContent = 'অ্যাকাউন্ট তৈরি করুন';
   } catch (e) {
     const msgs = {
       'auth/email-already-in-use': '❌ এই ইমেইলে আগে থেকেই অ্যাকাউন্ট আছে — লগইন ট্যাবে যান',
