@@ -2,1068 +2,538 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WorkHive — Download the App</title>
-<meta name="description" content="WorkHive — Bangladesh's micro-earning app. Complete simple tasks, get paid to bKash, Nagad, or USDT.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#080808">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.json">
+<title>WorkHive — Earning Platform</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Bengali:wght@500;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#070707; --bg2:#0d0f0d; --card:#111412; --card-line:#1b1f1c;
-  --green:#00E676; --green-dim:#0c1f13; --gold:#FFC93C;
-  --text:#EFF3EF; --text2:#9AA39C; --text3:#4d554f;
-  --hex-line:rgba(0,230,118,.14);
-  --r:20px;
-  /* task-category colors — match the live app exactly */
-  --cat-social:#448AFF; --cat-app:#00E676; --cat-web:#FF5252;
-  --cat-review:#FFB300; --cat-video:#E040FB; --cat-survey:#00BCD4;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  background:var(--bg); color:var(--text);
-  font-family:'Inter','Noto Sans Bengali',sans-serif;
-  overflow-x:hidden;
-}
-h1,h2,h3,.disp{font-family:'Space Grotesk','Noto Sans Bengali',sans-serif}
-.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
-img{max-width:100%;display:block}
-a{color:inherit}
-
-/* ===== HONEYCOMB BACKGROUND (signature motif) ===== */
-.hex-field{
-  position:absolute; inset:0; z-index:0; pointer-events:none;
-  background-image:
-    linear-gradient(30deg,var(--hex-line) 1px,transparent 1px),
-    linear-gradient(150deg,var(--hex-line) 1px,transparent 1px),
-    linear-gradient(90deg,var(--hex-line) 1px,transparent 1px);
-  background-size:64px 111px;
-  background-position:0 0,0 0,0 0;
-  mask-image:radial-gradient(ellipse 70% 60% at 50% 20%,black 20%,transparent 78%);
-  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 20%,black 20%,transparent 78%);
-  opacity:.55;
-}
-
-/* ===== NAV ===== */
-nav{position:sticky;top:0;z-index:40;backdrop-filter:blur(16px);background:rgba(7,7,7,.75);border-bottom:1px solid var(--card-line)}
-nav .in{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1140px;margin:0 auto;gap:12px;flex-wrap:wrap;row-gap:10px}
-.brand{display:flex;align-items:center;gap:10px}
-.brand-hex{width:34px;height:34px;background:var(--green);clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-.brand-name{font-family:'Space Grotesk';font-weight:700;font-size:17px;letter-spacing:-.2px}
-.nav-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end;flex:1 1 auto}
-.nav-cta{background:var(--green);color:#001a0a;font-weight:700;font-size:13px;padding:9px 16px;border-radius:10px;text-decoration:none;white-space:nowrap}
-.nav-login-plain{border:1px solid var(--card-line);background:transparent;color:var(--text);font-weight:700;font-size:13px;padding:9px 16px;border-radius:10px;cursor:pointer;font-family:inherit;white-space:nowrap;transition:border-color .15s,color .15s}
-.nav-login-plain:hover{border-color:var(--green);color:var(--green)}
-.nav-register-plain{border:1px solid var(--green);background:var(--green-dim);color:var(--green);font-weight:700;font-size:13px;padding:9px 16px;border-radius:10px;cursor:pointer;font-family:inherit;white-space:nowrap;transition:.15s}
-.nav-register-plain:hover{background:var(--green);color:#001a0a}
-.nav-login-plain.logged-in{border-color:var(--green);background:var(--green-dim);color:var(--green)}
-
-/* ===== HERO ===== */
-.hero{position:relative;padding:88px 0 60px;text-align:center;overflow:hidden}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--green-dim);border:1px solid rgba(0,230,118,.25);color:var(--green);font-size:12px;font-weight:700;padding:7px 16px;border-radius:30px;margin-bottom:26px;position:relative;z-index:1}
-.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
-.hero h1{position:relative;z-index:1;font-size:clamp(34px,6vw,58px);font-weight:700;line-height:1.08;letter-spacing:-1px;max-width:820px;margin:0 auto}
-.hero h1 span{color:var(--green)}
-.hero p.sub{position:relative;z-index:1;max-width:520px;margin:22px auto 8px;color:var(--text2);font-size:16px;line-height:1.7;font-weight:500}
-.hero p.sub.bn{font-family:'Noto Sans Bengali';font-size:15px}
-
-.hero-ctas{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:34px}
-.btn-download{
-  display:inline-flex;align-items:center;gap:12px;background:var(--green);color:#001a0a;
-  font-weight:700;font-size:15.5px;padding:15px 26px;border-radius:14px;text-decoration:none;
-  box-shadow:0 10px 34px rgba(0,230,118,.28); position:relative; overflow:hidden;
-  transition:transform .18s ease; border:none; cursor:pointer;
-}
-.btn-download:hover{transform:translateY(-2px)}
-.btn-download svg{width:22px;height:22px;flex-shrink:0}
-.btn-download .lbl{display:flex;flex-direction:column;align-items:flex-start;line-height:1.25}
-.btn-download .lbl small{font-size:10px;font-weight:600;opacity:.75;letter-spacing:.3px}
-.btn-download .lbl b{font-size:15.5px}
-.btn-website{
-  display:inline-flex;align-items:center;gap:12px;background:transparent;border:1.5px solid var(--card-line);
-  color:var(--text);font-weight:700;font-size:15.5px;padding:15px 26px;border-radius:14px;text-decoration:none;
-  transition:border-color .18s ease,transform .18s ease;
-}
-.btn-website:hover{border-color:var(--green);transform:translateY(-2px)}
-.btn-website svg{width:22px;height:22px;flex-shrink:0;stroke:var(--green)}
-.btn-website .lbl{display:flex;flex-direction:column;align-items:flex-start;line-height:1.25}
-.btn-website .lbl small{font-size:10px;font-weight:600;opacity:.65;letter-spacing:.3px}
-.btn-website .lbl b{font-size:15.5px}
-
-.hero-meta{position:relative;z-index:1;display:flex;flex-wrap:wrap;justify-content:center;gap:26px;margin-top:44px;color:var(--text3);font-size:12.5px;font-weight:600}
-.hero-meta span{display:flex;align-items:center;gap:6px}
-.hero-meta svg{width:14px;height:14px;stroke:var(--text3)}
-
-/* ===== STAT STRIP ===== */
-.stat-strip{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--card-line);border:1px solid var(--card-line);border-radius:18px;overflow:hidden;max-width:760px;margin:56px auto 0}
-.stat-cell{background:var(--card);padding:22px 10px;text-align:center}
-.stat-v{font-family:'Space Grotesk';font-size:22px;font-weight:700;color:var(--green)}
-.stat-l{font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
-
-/* ===== SECTION HEADS ===== */
-.sec{padding:96px 0}
-.sec-head{text-align:center;max-width:600px;margin:0 auto 52px}
-.sec-eyebrow{font-size:11.5px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1.4px;margin-bottom:12px}
-.sec-head h2{font-size:clamp(26px,4vw,38px);font-weight:700;letter-spacing:-.6px;line-height:1.2}
-.sec-head p{color:var(--text2);margin-top:14px;font-size:15px;line-height:1.7;font-family:'Noto Sans Bengali'}
-
-/* ===== SCREENSHOTS — hex-clipped phone frames (signature element) ===== */
-.shots-row{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;align-items:flex-end}
-.shot{width:230px;position:relative}
-.shot .frame{
-  position:relative; background:#0a0a0a; border:2px solid var(--card-line); border-radius:30px;
-  padding:10px; box-shadow:0 30px 70px rgba(0,0,0,.55);
-}
-.shot .screen{border-radius:22px;overflow:hidden;background:#0d0d0d;aspect-ratio:9/19.5;position:relative}
-.shot .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:60px;height:16px;background:#0a0a0a;border-radius:0 0 12px 12px;z-index:5}
-.shot.tall{margin-bottom:0}
-.shot:nth-child(2){transform:translateY(-22px)}
-.shot-cap{text-align:center;margin-top:16px;font-size:12.5px;color:var(--text2);font-weight:600;font-family:'Noto Sans Bengali'}
-
-/* mini mockup UI drawn in CSS (matches real app tokens, not a screenshot) */
-.mock{padding:16px 10px 10px;height:100%;display:flex;flex-direction:column;gap:8px;font-family:'Inter',sans-serif}
-.mock-top{display:flex;align-items:center;gap:7px}
-.mock-av{width:20px;height:20px;border-radius:6px;background:var(--green-dim);border:1px solid rgba(0,230,118,.3);flex-shrink:0}
-.mock-line{height:5px;border-radius:3px;background:#1a1e1a}
-.mock-line.w60{width:60%}.mock-line.w40{width:40%}.mock-line.w80{width:80%}
-.mock-card{background:#12160f;border:1px solid #1b2019;border-radius:11px;padding:9px}
-.mock-bal{font-family:'Space Grotesk';color:var(--green);font-size:17px;font-weight:700;margin:3px 0}
-.mock-pill-row{display:flex;gap:4px;margin-top:7px}
-.mock-pill{flex:1;background:#0e120e;border-radius:7px;padding:5px 3px;text-align:center}
-.mock-pill .v{font-size:8px;font-weight:700;color:var(--gold)}
-.mock-pill .l{font-size:5.5px;color:var(--text3);margin-top:2px;letter-spacing:.3px}
-.mock-task{display:flex;gap:6px;align-items:center;background:#0f130f;border:1px solid #1a1f1a;border-radius:9px;padding:7px}
-.mock-task .ic{width:22px;height:22px;border-radius:7px;flex-shrink:0}
-.mock-task .txt{flex:1;display:flex;flex-direction:column;gap:4px}
-.mock-nav{margin-top:auto;display:flex;justify-content:space-around;align-items:center;padding-top:7px;border-top:1px solid #161915}
-.mock-nav i{width:12px;height:12px;border-radius:4px;background:#1c211c;display:block}
-.mock-nav i.on{background:var(--green)}
-.mock-nav .fab{width:20px;height:20px;border-radius:6px;background:var(--green);margin-top:-14px}
-
-/* ===== HOW IT WORKS ===== */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.step{background:var(--card);border:1px solid var(--card-line);border-radius:18px;padding:24px 20px;position:relative}
-.step .num{font-family:'Space Grotesk';font-size:13px;font-weight:700;color:var(--green);background:var(--green-dim);border:1px solid rgba(0,230,118,.28);width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
-.step h3{font-size:14.5px;font-weight:700;margin-bottom:8px;font-family:'Noto Sans Bengali'}
-.step p{font-size:12.5px;color:var(--text2);line-height:1.7;font-family:'Noto Sans Bengali'}
-.step-arrow{position:absolute;top:34px;right:-24px;color:var(--text3);font-size:18px;z-index:2}
-
-/* ===== TASK TYPES ===== */
-.task-types{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.ttype{background:var(--card);border:1px solid var(--card-line);border-radius:16px;padding:20px;display:flex;gap:13px;align-items:flex-start}
-.ttype .hx{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.ttype h4{font-size:14px;font-weight:700;margin-bottom:5px;font-family:'Noto Sans Bengali'}
-.ttype p{font-size:12px;color:var(--text2);line-height:1.6;font-family:'Noto Sans Bengali'}
-
-/* ===== FEATURES ===== */
-.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.feat{background:var(--card);border:1px solid var(--card-line);border-radius:18px;padding:26px 22px;position:relative;overflow:hidden}
-.feat .hx{width:42px;height:42px;background:var(--green-dim);border:1px solid rgba(0,230,118,.28);clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);display:flex;align-items:center;justify-content:center;font-size:19px;margin-bottom:16px}
-.feat h3{font-size:15.5px;font-weight:700;margin-bottom:8px;font-family:'Noto Sans Bengali'}
-.feat p{font-size:13px;color:var(--text2);line-height:1.7;font-family:'Noto Sans Bengali'}
-
-/* ===== REVIEWS ===== */
-.rating-summary{display:flex;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap;margin-bottom:44px}
-.rs-num{font-family:'Space Grotesk';font-size:52px;font-weight:700;color:var(--gold);line-height:1}
-.rs-stars{color:var(--gold);font-size:16px;letter-spacing:2px}
-.rs-count{font-size:12px;color:var(--text3);margin-top:4px;font-family:'Noto Sans Bengali'}
-.review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:34px}
-.review-card{background:var(--card);border:1px solid var(--card-line);border-radius:16px;padding:20px}
-.review-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.review-av{width:34px;height:34px;border-radius:10px;background:var(--green-dim);color:var(--green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
-.review-name{font-size:13px;font-weight:700}
-.review-stars{color:var(--gold);font-size:11px}
-.review-text{font-size:13px;color:var(--text2);line-height:1.7;font-family:'Noto Sans Bengali'}
-.review-empty{grid-column:1/-1;text-align:center;color:var(--text3);font-size:13px;padding:20px;font-family:'Noto Sans Bengali'}
-
-.review-cta{text-align:center}
-.btn-review{
-  display:inline-flex;align-items:center;gap:8px;background:transparent;border:1.5px solid var(--gold);
-  color:var(--gold);font-weight:700;font-size:14px;padding:13px 26px;border-radius:14px;cursor:pointer;
-  font-family:inherit;transition:.15s;
-}
-.btn-review:hover{background:rgba(255,201,60,.08)}
-
-/* ===== REVIEW MODAL ===== */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
-.modal-overlay.show{display:flex}
-.modal{background:var(--card);border:1px solid var(--card-line);border-radius:20px;padding:28px;width:100%;max-width:400px;position:relative}
-.modal h3{font-size:18px;font-weight:700;margin-bottom:4px;font-family:'Noto Sans Bengali'}
-.modal p.hint{font-size:12px;color:var(--text3);margin-bottom:18px;font-family:'Noto Sans Bengali'}
-.star-picker{display:flex;gap:6px;font-size:28px;color:#2a2e29;cursor:pointer;margin-bottom:16px}
-.star-picker span.on{color:var(--gold)}
-.modal input,.modal textarea,.modal select{width:100%;background:#0c0f0c;border:1px solid var(--card-line);border-radius:10px;padding:11px 13px;color:var(--text);font-family:inherit;font-size:13.5px;margin-bottom:12px;outline:none}
-.modal input:focus,.modal textarea:focus,.modal select:focus{border-color:var(--green)}
-.modal textarea{min-height:80px;resize:vertical}
-.modal-actions{display:flex;gap:10px;margin-top:6px}
-.modal-actions button{flex:1;padding:12px;border-radius:10px;border:none;font-weight:700;font-size:13.5px;cursor:pointer;font-family:inherit}
-.btn-cancel{background:#181c18;color:var(--text2)}
-.btn-submit{background:var(--green);color:#001a0a}
-.modal-close{position:absolute;top:16px;right:18px;cursor:pointer;color:var(--text3);font-size:16px}
-
-/* ===== AUTH MODAL (login / register) ===== */
-.auth-modal{max-width:380px}
-.auth-modal-logo{width:52px;height:52px;border-radius:16px;background:var(--green-dim);border:1.5px solid rgba(0,230,118,.28);display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 12px}
-.auth-modal h3{text-align:center;font-family:'Space Grotesk','Noto Sans Bengali'}
-.auth-modal p.hint{text-align:center}
-.auth-tabs{display:flex;background:#0c0f0c;border:1px solid var(--card-line);border-radius:12px;padding:3px;gap:3px;margin-bottom:18px}
-.auth-tab{flex:1;text-align:center;padding:9px;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;color:var(--text3);transition:all .2s;font-family:'Noto Sans Bengali'}
-.auth-tab.active{background:var(--green);color:#001a0a}
-.auth-field-label{font-size:10.5px;font-weight:700;color:var(--text3);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px}
-.auth-error{color:#FF5252;font-size:12px;font-weight:600;text-align:center;margin-bottom:10px;min-height:14px;font-family:'Noto Sans Bengali'}
-.auth-divider{display:flex;align-items:center;gap:10px;color:var(--text3);font-size:11px;font-weight:700;margin:6px 0 12px}
-.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--card-line)}
-.btn-google-auth{width:100%;padding:12px;border-radius:10px;border:1px solid var(--card-line);background:#0c0f0c;color:var(--text2);font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:10px;transition:border-color .2s}
-.btn-google-auth:hover{border-color:var(--green)}
-.auth-success-wrap{text-align:center;padding:6px 0}
-.auth-success-ico{font-size:46px;margin-bottom:12px}
-.auth-success-title{font-size:17px;font-weight:700;margin-bottom:6px;font-family:'Noto Sans Bengali'}
-.auth-success-sub{font-size:12.5px;color:var(--text2);margin-bottom:20px;font-family:'Noto Sans Bengali';line-height:1.6}
-.auth-note{font-size:11px;color:var(--text3);text-align:center;margin-top:12px;line-height:1.6;font-family:'Noto Sans Bengali'}
-
-/* ===== FAQ ===== */
-.faq-list{max-width:720px;margin:0 auto}
-.faq-item{background:var(--card);border:1px solid var(--card-line);border-radius:14px;margin-bottom:10px;overflow:hidden}
-.faq-q{padding:16px 20px;font-size:13.5px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'Noto Sans Bengali'}
-.faq-q svg{width:16px;height:16px;stroke:var(--text3);flex-shrink:0;transition:transform .2s}
-.faq-item.open .faq-q svg{transform:rotate(180deg)}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease}
-.faq-item.open .faq-a{max-height:200px}
-.faq-a p{padding:0 20px 16px;font-size:12.5px;color:var(--text2);line-height:1.7;font-family:'Noto Sans Bengali'}
-
-/* ===== FINAL CTA ===== */
-.final{text-align:center;padding:100px 0;position:relative}
-.final h2{font-size:clamp(28px,5vw,44px);font-weight:700;letter-spacing:-.6px;max-width:600px;margin:0 auto 14px}
-.final p{color:var(--text2);font-size:15px;margin-bottom:34px;font-family:'Noto Sans Bengali'}
-.final-ctas{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;position:relative;z-index:1}
-
-/* ===== FOOTER ===== */
-footer{border-top:1px solid var(--card-line);padding:32px 0;text-align:center;color:var(--text3);font-size:12px;font-family:'Noto Sans Bengali'}
-
-@media(max-width:860px){
-  .feat-grid{grid-template-columns:1fr}
-  .review-grid{grid-template-columns:1fr}
-  .stat-strip{grid-template-columns:repeat(2,1fr)}
-  .shots-row{gap:16px}
-  .shot{width:150px}
-  .shot:nth-child(2){transform:none}
-  .steps{grid-template-columns:1fr}
-  .step-arrow{display:none}
-  .task-types{grid-template-columns:1fr}
-  nav .in{padding:12px 16px}
-  .nav-actions{gap:6px}
-  .nav-login-plain,.nav-register-plain,.nav-cta{font-size:12px;padding:8px 12px}
-}
-
-@media(max-width:400px){
-  .nav-actions{width:100%;justify-content:space-between}
-  .nav-login-plain,.nav-register-plain,.nav-cta{flex:1;text-align:center;padding:8px 6px}
-}
-
-/* ══════════════ HERO 3D SCENE (trust visual) ══════════════ */
-.scene-wrap{position:relative;height:260px;max-width:680px;margin:0 auto 8px;perspective:1400px}
-.scene{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .3s ease-out}
-
-.device{
-  position:absolute;left:50%;top:50%;width:150px;height:218px;
-  transform:translate(-50%,-50%) rotateY(-10deg) rotateX(6deg) translateZ(40px);
-  background:linear-gradient(160deg,#12160f,#0a0a0a 70%);
-  border:2px solid var(--card-line); border-radius:24px;
-  box-shadow:0 30px 70px rgba(0,0,0,.6), 0 0 0 1px rgba(0,230,118,.06);
-  padding:11px; z-index:5; animation:deviceFloat 6s ease-in-out infinite;
-  display:flex; flex-direction:column;
-}
-@keyframes deviceFloat{
-  0%,100%{ transform:translate(-50%,-50%) rotateY(-10deg) rotateX(6deg) translateZ(40px) translateY(0); }
-  50%{ transform:translate(-50%,-50%) rotateY(-10deg) rotateX(6deg) translateZ(40px) translateY(-10px); }
-}
-.device-notch{width:30px;height:4px;border-radius:4px;background:#1c211c;margin:0 auto 10px}
-.device-bal-label{font-size:7px;color:rgba(0,230,118,.55);font-weight:700;text-transform:uppercase;letter-spacing:.6px;text-align:center}
-.device-bal{font-family:'Space Grotesk';font-size:20px;font-weight:700;color:var(--green);text-align:center;margin:3px 0 10px}
-.device-row{display:flex;align-items:center;gap:6px;background:#0e120e;border:1px solid #1a1f1a;border-radius:9px;padding:6px 8px;margin-bottom:6px}
-.device-row .di{width:18px;height:18px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0}
-.device-row .dt{flex:1;height:5px;border-radius:3px;background:#1a1e1a}
-.device-btn{margin-top:auto;background:var(--green);color:#001a0a;font-weight:800;font-size:9px;text-align:center;padding:8px;border-radius:8px;font-family:'Noto Sans Bengali'}
-
-.satellite{
-  position:absolute; background:var(--card); border:1px solid var(--card-line); border-radius:13px;
-  padding:9px 11px; box-shadow:0 16px 36px rgba(0,0,0,.5); z-index:4;
-  display:flex; align-items:center; gap:8px; white-space:nowrap;
-}
-.satellite .s-ico{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
-.satellite .s-txt b{display:block;font-size:10px;font-weight:700;font-family:'Noto Sans Bengali'}
-.satellite .s-txt span{display:block;font-size:8.5px;color:var(--text3);margin-top:1px}
-
-.sat-social{ left:1%; top:12%; transform:rotateY(8deg) translateZ(10px); animation:floatA 5.5s ease-in-out infinite; }
-.sat-app{ left:5%; bottom:10%; transform:rotateY(10deg) translateZ(-10px); animation:floatB 6.5s ease-in-out infinite; }
-.sat-review{ right:2%; top:8%; transform:rotateY(-8deg) translateZ(0px); animation:floatB 6s ease-in-out infinite; }
-.sat-cashout{ right:0%; bottom:6%; transform:rotateY(-10deg) translateZ(20px); animation:floatA 5s ease-in-out infinite; }
-
-@keyframes floatA{0%,100%{ margin-top:0 } 50%{ margin-top:-10px }}
-@keyframes floatB{0%,100%{ margin-top:0 } 50%{ margin-top:8px }}
-
-.cashout-flow{display:flex;align-items:center;gap:4px}
-.cashout-coin{width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe27a,var(--gold) 60%);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;color:#3a2a00;animation:coinMove 1.8s ease-in-out infinite}
-@keyframes coinMove{0%{transform:translateX(0);opacity:1}70%{transform:translateX(12px);opacity:0}100%{transform:translateX(12px);opacity:0}}
-.cashout-arrow{color:var(--text3);font-size:11px}
-
-.spark{position:absolute;border-radius:50%;background:var(--green);opacity:.5;filter:blur(.5px);animation:sparkFloat 4s ease-in-out infinite}
-@keyframes sparkFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
-
-@media(max-width:760px){
-  .scene-wrap{height:340px}
-  .device{width:135px;height:200px}
-  .satellite{padding:7px 9px}
-  .satellite .s-txt b{font-size:9.5px}
-  .sat-social{left:3%;top:5%}
-  .sat-app{left:3%;bottom:18%}
-  .sat-review{right:3%;top:5%}
-  .sat-cashout{right:3%;bottom:18%}
-}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/post.css">
+<!-- Loads only its own tiny SDK; does nothing when the page is opened outside Telegram -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
 
-<nav>
-  <div class="in">
-    <div class="brand">
-      <div class="brand-hex">🐝</div>
-      <div class="brand-name">WorkHive</div>
-    </div>
-    <div class="nav-actions">
-      <button class="nav-login-plain" id="navLoginBtn" onclick="handleNavLoginClick()">লগইন</button>
-      <button class="nav-register-plain" id="navRegisterBtn" onclick="openAuthModal('register')">রেজিস্ট্রেশন</button>
-      <a href="#download" class="nav-cta">ডাউনলোড করুন</a>
-    </div>
+<script>
+// ── ENVIRONMENT DETECTION (runs before first paint, no flash) ─────────────
+// Intentionally a plain (non-module) inline script: it must run synchronously
+// before first paint to avoid a flash of the wrong layout, and it's fully
+// self-contained (nothing else in the app calls into it). Everything else
+// lives in js/main.js and its imports.
+(function detectAndApplyEnvironment() {
+  var html = document.documentElement;
+  var tg = window.Telegram && window.Telegram.WebApp;
+  if (tg && typeof tg.ready === 'function' && (tg.initData || tg.initDataUnsafe && Object.keys(tg.initDataUnsafe).length)) {
+    html.setAttribute('data-env', 'telegram');
+    try {
+      tg.ready(); tg.expand();
+      if (tg.disableVerticalSwipes) tg.disableVerticalSwipes();
+      applyTelegramTheme(tg);
+      window.addEventListener('resize', function () { applyTelegramSafeArea(tg); });
+      applyTelegramSafeArea(tg);
+      if (tg.onEvent) tg.onEvent('themeChanged', function () { applyTelegramTheme(tg); });
+    } catch (e) { console.warn('Telegram WebApp init:', e); }
+    return;
+  }
+  var isStandalone = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+  if (isStandalone) { html.setAttribute('data-env', 'app'); return; }
+  var isNarrow = window.matchMedia && window.matchMedia('(max-width:480px)').matches;
+  html.setAttribute('data-env', isNarrow ? 'mobile-web' : 'desktop-web');
+})();
+function applyTelegramTheme(tg) {
+  var p = tg.themeParams || {}; var root = document.documentElement.style;
+  if (p.bg_color) root.setProperty('--bg', p.bg_color);
+  if (p.secondary_bg_color) { root.setProperty('--bg2', p.secondary_bg_color); root.setProperty('--bg3', p.secondary_bg_color); }
+  if (p.text_color) root.setProperty('--text', p.text_color);
+  if (p.hint_color) root.setProperty('--text3', p.hint_color);
+  if (p.button_color) root.setProperty('--green', p.button_color);
+  var headerColor = p.bg_color || '#080808';
+  if (tg.setHeaderColor) { try { tg.setHeaderColor(headerColor); } catch (e) {} }
+  if (tg.setBackgroundColor) { try { tg.setBackgroundColor(headerColor); } catch (e) {} }
+}
+function applyTelegramSafeArea(tg) {
+  var root = document.documentElement.style;
+  var full = window.innerHeight;
+  var stable = tg.viewportStableHeight || tg.viewportHeight || full;
+  var gap = Math.max(0, full - stable);
+  root.setProperty('--tg-safe-top', '0px');
+  root.setProperty('--tg-safe-bottom', gap + 'px');
+}
+</script>
+
+<div id="loadingScreen">
+  <div class="load-logo">🐝</div>
+  <div class="load-text">WORKHIVE</div>
+  <div class="load-bar"><div class="load-fill"></div></div>
+</div>
+
+<!-- AUTH -->
+<div id="authScreen">
+  <div class="auth-logo">🐝</div>
+  <div class="auth-title">WorkHive</div>
+  <div class="auth-sub" id="authSubText">Bangladesh's #1 Micro-Earning Platform</div>
+  <div class="auth-tabs">
+    <div class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Login</div>
+    <div class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Register</div>
   </div>
-</nav>
-
-<header class="hero">
-  <div class="hex-field"></div>
-  <div class="wrap">
-    <div class="eyebrow"><span class="dot"></span> Now available for Android</div>
-
-    <div class="scene-wrap" id="sceneWrap">
-      <div class="scene" id="scene">
-        <div class="spark" style="width:6px;height:6px;left:22%;top:6%;animation-delay:.2s"></div>
-        <div class="spark" style="width:4px;height:4px;left:78%;top:20%;animation-delay:1.1s"></div>
-        <div class="spark" style="width:5px;height:5px;left:14%;top:70%;animation-delay:.6s"></div>
-        <div class="spark" style="width:4px;height:4px;left:85%;top:68%;animation-delay:1.6s"></div>
-
-        <div class="satellite sat-social">
-          <div class="s-ico" style="background:rgba(68,138,255,.14);color:#448AFF">👍</div>
-          <div class="s-txt"><b>সোশ্যাল মিডিয়া টাস্ক</b><span>+$0.90 · অনুমোদিত</span></div>
-        </div>
-
-        <div class="satellite sat-app">
-          <div class="s-ico" style="background:rgba(0,230,118,.14);color:#00E676">📲</div>
-          <div class="s-txt"><b>অ্যাপ ডাউনলোড</b><span>+$0.50 · অনুমোদিত</span></div>
-        </div>
-
-        <div class="satellite sat-review">
-          <div class="s-ico" style="background:rgba(255,179,0,.14);color:#FFB300">⭐</div>
-          <div class="s-txt"><b>রিভিউ টাস্ক</b><span>+$0.35 · অনুমোদিত</span></div>
-        </div>
-
-        <div class="satellite sat-cashout">
-          <div class="s-ico" style="background:rgba(0,230,118,.14);color:#00E676">📤</div>
-          <div class="s-txt">
-            <b>bKash-এ উইথড্র</b>
-            <span class="cashout-flow">ব্যালেন্স <span class="cashout-arrow">→</span> <span class="cashout-coin">৳</span> bKash</span>
-          </div>
-        </div>
-
-        <div class="device">
-          <div class="device-notch"></div>
-          <div class="device-bal-label">Available Balance</div>
-          <div class="device-bal">$14.62</div>
-          <div class="device-row"><div class="di" style="background:linear-gradient(135deg,#448AFF,#2962FF)">👍</div><div class="dt"></div></div>
-          <div class="device-row"><div class="di" style="background:linear-gradient(135deg,#00E676,#00C853)">📲</div><div class="dt"></div></div>
-          <div class="device-row"><div class="di" style="background:linear-gradient(135deg,#FFB300,#FF6F00)">⭐</div><div class="dt"></div></div>
-          <div class="device-btn">⬆️ উইথড্র করুন</div>
-        </div>
-      </div>
+  <div id="loginPane" style="width:100%">
+    <div class="auth-field"><label>Email Address</label><input type="email" id="loginEmail" placeholder="Enter your email" autocomplete="email"></div>
+    <div class="auth-field"><label>Password</label><div class="pass-toggle"><input type="password" id="loginPass" placeholder="Enter password" autocomplete="current-password"><span class="pass-eye" onclick="togglePass('loginPass',this)">👁</span></div></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:-5px;margin-bottom:13px">
+      <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);font-weight:600;cursor:pointer"><input type="checkbox" id="rememberMe" style="width:14px;height:14px;accent-color:var(--green)">Remember Me</label>
+      <div class="forgot-link" onclick="doForgotPassword()">Forgot password?</div>
     </div>
-
-    <h1>ছোট ছোট টাস্ক করুন,<br><span>সরাসরি ব্যালেন্সে টাকা আয়</span> করুন</h1>
-    <p class="sub bn">WorkHive দিয়ে সোশ্যাল মিডিয়া টাস্ক, অ্যাপ ডাউনলোড, রিভিউ ও রেফারেল থেকে আয় করুন — bKash, Nagad ও USDT-তে সরাসরি উইথড্র করুন।</p>
-
-    <div class="hero-ctas" id="download">
-      <a class="btn-download" href="https://apps.volt.build/25a00368-dae2-44df-bbdb-76d07e6dced6/android.debug.apk" download>
-        <svg viewBox="0 0 24 24" fill="none" stroke="#001a0a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13m0 0l-4.5-4.5M12 16l4.5-4.5"/><path d="M4 19h16"/></svg>
-        <span class="lbl"><small>Direct APK Download</small><b>Android-এ ইনস্টল করুন</b></span>
-      </a>
-      <a class="btn-website" href="https://tinyurl.com/worhive" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 0 1 0 18M12 3a13 13 0 0 0 0 18"/></svg>
-        <span class="lbl"><small>No install needed</small><b>ব্রাউজারে ওয়েবসাইট খুলুন</b></span>
-      </a>
-    </div>
-
-    <div class="hero-meta">
-      <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg> Google Play লাগে না</span>
-      <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg> Android 8.0+</span>
-      <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 4v6c0 5-3 8-7 10-4-2-7-5-7-10V6z"/></svg> এডমিন-ভেরিফায়েড টাস্ক</span>
-    </div>
-
-    <div class="stat-strip">
-      <div class="stat-cell"><div class="stat-v" id="stUsers">—</div><div class="stat-l">Active Workers</div></div>
-      <div class="stat-cell"><div class="stat-v">৩</div><div class="stat-l">Payout Methods</div></div>
-      <div class="stat-cell"><div class="stat-v">২৪–৪৮ঘ</div><div class="stat-l">Withdrawal Time</div></div>
-      <div class="stat-cell"><div class="stat-v" id="stRating">নতুন</div><div class="stat-l">User Rating</div></div>
-    </div>
+    <div class="auth-error" id="loginErr"></div>
+    <button class="btn-auth" id="loginBtn" onclick="doLogin()"><span id="loginBtnText">Login</span></button>
+    <div class="divider">or</div>
+    <button class="btn-google" onclick="doGoogle()">
+      <svg class="g-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      Sign in with Google
+    </button>
   </div>
-</header>
-
-<section class="sec" id="screens">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">Inside the app</div>
-      <h2>আপনার হোম, টাস্ক ও ওয়ালেট<br>এক জায়গায়</h2>
-    </div>
-    <div class="shots-row">
-      <div class="shot">
-        <div class="frame"><div class="screen"><div class="notch"></div>
-          <div class="mock">
-            <div class="mock-top"><div class="mock-av"></div><div style="flex:1"><div class="mock-line w40"></div></div></div>
-            <div class="mock-card">
-              <div class="mock-line w60" style="background:#173"></div>
-              <div class="mock-bal">$14.62</div>
-              <div class="mock-pill-row"><div class="mock-pill"><div class="v">$0</div><div class="l">PEND</div></div><div class="mock-pill"><div class="v">$32</div><div class="l">EARN</div></div><div class="mock-pill"><div class="v">$18</div><div class="l">OUT</div></div></div>
-            </div>
-            <div class="mock-task"><div class="ic" style="background:linear-gradient(135deg,#448AFF,#2962FF)"></div><div class="txt"><div class="mock-line w80"></div><div class="mock-line w40"></div></div></div>
-            <div class="mock-task"><div class="ic" style="background:linear-gradient(135deg,#00E676,#00C853)"></div><div class="txt"><div class="mock-line w60"></div><div class="mock-line w40"></div></div></div>
-            <div class="mock-nav"><i class="on"></i><i></i><div class="fab"></div><i></i><i></i></div>
-          </div>
-        </div></div>
-        <div class="shot-cap">হোম — ব্যালেন্স ওভারভিউ</div>
-      </div>
-      <div class="shot">
-        <div class="frame"><div class="screen"><div class="notch"></div>
-          <div class="mock">
-            <div class="mock-top"><div class="mock-line w40"></div></div>
-            <div class="mock-task"><div class="ic" style="background:linear-gradient(135deg,#E040FB,#AA00FF)"></div><div class="txt"><div class="mock-line w80"></div><div class="mock-line w40"></div></div></div>
-            <div class="mock-task"><div class="ic" style="background:linear-gradient(135deg,#FFB300,#FF6F00)"></div><div class="txt"><div class="mock-line w80"></div><div class="mock-line w40"></div></div></div>
-            <div class="mock-task"><div class="ic" style="background:linear-gradient(135deg,#00BCD4,#006064)"></div><div class="txt"><div class="mock-line w80"></div><div class="mock-line w40"></div></div></div>
-            <div class="mock-task"><div class="ic" style="background:linear-gradient(135deg,#448AFF,#2962FF)"></div><div class="txt"><div class="mock-line w80"></div><div class="mock-line w40"></div></div></div>
-            <div class="mock-task"><div class="ic" style="background:linear-gradient(135deg,#FF5252,#D50000)"></div><div class="txt"><div class="mock-line w80"></div><div class="mock-line w40"></div></div></div>
-            <div class="mock-nav"><i></i><i class="on"></i><div class="fab"></div><i></i><i></i></div>
-          </div>
-        </div></div>
-        <div class="shot-cap">টাস্ক — নতুন কাজ খুঁজুন</div>
-      </div>
-      <div class="shot">
-        <div class="frame"><div class="screen"><div class="notch"></div>
-          <div class="mock">
-            <div class="mock-top"><div class="mock-line w40"></div></div>
-            <div class="mock-card" style="text-align:center;padding:16px 8px">
-              <div class="mock-line w40" style="margin:0 auto 8px"></div>
-              <div class="mock-bal" style="font-size:22px">$14.62</div>
-              <div class="mock-line w60" style="margin:8px auto 0"></div>
-            </div>
-            <div class="mock-pill-row" style="margin-top:2px">
-              <div class="mock-pill" style="padding:8px 3px">📱</div>
-              <div class="mock-pill" style="padding:8px 3px">💳</div>
-              <div class="mock-pill" style="padding:8px 3px">₮</div>
-            </div>
-            <div class="mock-card"><div class="mock-line w80"></div><div class="mock-line w40" style="margin-top:8px"></div></div>
-            <div class="mock-nav"><i></i><i></i><div class="fab"></div><i class="on"></i><i></i></div>
-          </div>
-        </div></div>
-        <div class="shot-cap">ওয়ালেট — bKash/Nagad/USDT</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="sec" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">Getting started</div>
-      <h2>কীভাবে কাজ করবেন</h2>
-      <p>মাত্র ৪ ধাপে রেজিস্ট্রেশন থেকে উইথড্র পর্যন্ত পুরো প্রসেসটা এখানে দেখানো হলো।</p>
-    </div>
-    <div class="steps">
-      <div class="step">
-        <div class="num">১</div>
-        <h3>অ্যাকাউন্ট খুলুন</h3>
-        <p>নাম, ইমেইল ও ফোন নম্বর দিয়ে ১ মিনিটে রেজিস্ট্রেশন করুন — চাইলে বন্ধুর রেফারেল কোডও ব্যবহার করতে পারেন।</p>
-        <div class="step-arrow">→</div>
-      </div>
-      <div class="step">
-        <div class="num">২</div>
-        <h3>টাস্ক বেছে নিন</h3>
-        <p>Tasks ট্যাব থেকে সোশ্যাল মিডিয়া, অ্যাপ ডাউনলোড, রিভিউ বা সার্ভে টাস্ক বেছে নিন এবং নির্দেশনা অনুযায়ী কাজ শেষ করুন।</p>
-        <div class="step-arrow">→</div>
-      </div>
-      <div class="step">
-        <div class="num">৩</div>
-        <h3>প্রুফ সাবমিট করুন</h3>
-        <p>কাজ শেষ হলে স্ক্রিনশট বা নোট সাবমিট করুন। এডমিন যাচাই করে অনুমোদন করলে ব্যালেন্সে টাকা যোগ হয়ে যাবে।</p>
-        <div class="step-arrow">→</div>
-      </div>
-      <div class="step">
-        <div class="num">৪</div>
-        <h3>উইথড্র করুন</h3>
-        <p>নির্ধারিত মিনিমাম ব্যালেন্স হলে bKash, Nagad বা USDT-তে উইথড্র রিকোয়েস্ট দিন — ২৪–৪৮ ঘণ্টায় প্রসেস হয়ে যাবে।</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="sec" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">Task categories</div>
-      <h2>কী ধরনের কাজ থাকে</h2>
-      <p>প্রতিটি টাস্ক এডমিন অনুমোদনের পরই লাইভ হয় — কাজের ধরন অনুযায়ী কয়েকটি ক্যাটাগরি এখানে দেওয়া হলো।</p>
-    </div>
-    <div class="task-types">
-      <div class="ttype">
-        <div class="hx" style="background:rgba(68,138,255,.12);color:var(--cat-social)">👍</div>
-        <div><h4>সোশ্যাল মিডিয়া</h4><p>ফেসবুক পেজ/গ্রুপে লাইক, কমেন্ট, শেয়ার বা ফলো করার মতো ছোট ছোট কাজ।</p></div>
-      </div>
-      <div class="ttype">
-        <div class="hx" style="background:rgba(0,230,118,.12);color:var(--cat-app)">📲</div>
-        <div><h4>অ্যাপ ডাউনলোড</h4><p>নির্দিষ্ট অ্যাপ ইনস্টল করে ওপেন করলেই টাস্ক সম্পন্ন হয়ে যায়।</p></div>
-      </div>
-      <div class="ttype">
-        <div class="hx" style="background:rgba(255,82,82,.12);color:var(--cat-web)">🌐</div>
-        <div><h4>ওয়েবসাইট ভিজিট</h4><p>নির্দিষ্ট লিংকে ভিজিট করলেই টাস্ক অটোমেটিক সম্পন্ন হয়ে যায়, কোনো প্রুফ লাগে না।</p></div>
-      </div>
-      <div class="ttype">
-        <div class="hx" style="background:rgba(255,179,0,.12);color:var(--cat-review)">⭐</div>
-        <div><h4>রিভিউ / রেটিং</h4><p>প্লে স্টোর বা ওয়েবসাইটে সততার সাথে রিভিউ ও রেটিং দিলে রিওয়ার্ড পাবেন।</p></div>
-      </div>
-      <div class="ttype">
-        <div class="hx" style="background:rgba(224,64,251,.12);color:var(--cat-video)">▶️</div>
-        <div><h4>ভিডিও দেখা</h4><p>নির্ধারিত সময় পর্যন্ত ভিডিও দেখলে সেই টাস্কের রিওয়ার্ড পেয়ে যাবেন।</p></div>
-      </div>
-      <div class="ttype">
-        <div class="hx" style="background:rgba(0,188,212,.12);color:var(--cat-survey)">📝</div>
-        <div><h4>সার্ভে</h4><p>ছোট প্রশ্নপত্র পূরণ করে মতামত দিন এবং রিওয়ার্ড অর্জন করুন।</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="sec" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">Why WorkHive</div>
-      <h2>আয় শুরু করা সহজ</h2>
-    </div>
-    <div class="feat-grid">
-      <div class="feat">
-        <div class="hx">✅</div>
-        <h3>এডমিন-ভেরিফায়েড টাস্ক</h3>
-        <p>প্রতিটি টাস্ক এডমিন অনুমোদনের পরই লাইভ হয় — কোনো স্ক্যাম বা ভুয়া টাস্ক নেই।</p>
-      </div>
-      <div class="feat">
-        <div class="hx">👥</div>
-        <h3>৩-জেনারেশন রেফারেল</h3>
-        <p>বন্ধুদের ইনভাইট করে ৩ লেভেল পর্যন্ত পাসিভ ইনকাম করুন — নেটওয়ার্ক যত বড়, আয় তত বেশি।</p>
-      </div>
-      <div class="feat">
-        <div class="hx">⚡</div>
-        <h3>দ্রুত পেমেন্ট</h3>
-        <p>bKash, Nagad ও USDT-তে ২৪–৪৮ ঘণ্টায় উইথড্রয়াল প্রসেস হয় — কোনো লুকানো ফি নেই।</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="sec">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">User reviews</div>
-      <h2>ইউজাররা যা বলছেন</h2>
-    </div>
-    <div class="rating-summary">
-      <div>
-        <div class="rs-num" id="ratingAvg">—</div>
-        <div class="rs-stars" id="ratingStars">☆☆☆☆☆</div>
-        <div class="rs-count" id="ratingCount">লোড হচ্ছে…</div>
-      </div>
-    </div>
-    <div class="review-grid" id="reviewGrid">
-      <div class="review-empty">রিভিউ লোড হচ্ছে…</div>
-    </div>
-    <div class="review-cta">
-      <button class="btn-review" onclick="openReviewModal()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
-        রিভিউ দিন
-      </button>
-    </div>
-  </div>
-</section>
-
-<section class="sec" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">FAQ</div>
-      <h2>সচরাচর জিজ্ঞাসা</h2>
-    </div>
-    <div class="faq-list" id="faqList">
-      <div class="faq-item">
-        <div class="faq-q">টাকা তুলতে কত সময় লাগে?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </div>
-        <div class="faq-a"><p>এডমিন উইথড্রয়াল রিকোয়েস্ট অনুমোদন করার পর ২৪–৪৮ ঘণ্টার মধ্যে bKash, Nagad বা USDT-তে টাকা পাঠানো হয়।</p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">টাস্ক সম্পন্ন করলে কি সাথে সাথে টাকা পাই?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </div>
-        <div class="faq-a"><p>প্রুফ-ভিত্তিক টাস্কে না — প্রুফ সাবমিট করার পর এডমিন যাচাই করে অনুমোদন করলে ব্যালেন্সে টাকা যোগ হয়। ওয়েবসাইট ভিজিট টাস্কে অটোমেটিক ক্রেডিট হয়।</p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">রেফারেল থেকে কীভাবে আয় করব?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </div>
-        <div class="faq-a"><p>আপনার রেফারেল কোড দিয়ে কেউ জয়েন করলে আপনি বোনাস পাবেন — এমনকি তার রেফার করা মানুষ থেকেও ৩ জেনারেশন পর্যন্ত আয় হবে।</p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">অ্যাপটা কি Google Play থেকে ইনস্টল করতে হবে?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </div>
-        <div class="faq-a"><p>না — এই পেজ থেকে সরাসরি APK ডাউনলোড করে ইনস্টল করা যায়, অথবা ব্রাউজারে ওয়েবসাইট বাটনে ক্লিক করে সরাসরি ব্যবহার করা যায়, কোনো ইনস্টল ছাড়াই।</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="final">
-  <div class="hex-field" style="opacity:.35"></div>
-  <div class="wrap" style="position:relative;z-index:1">
-    <h2>আজই শুরু করুন, আজই আয় শুরু করুন</h2>
-    <p>ফ্রি — একাউন্ট খুলতে ১ মিনিট — Google Play লাগে না</p>
-    <div class="final-ctas">
-      <a class="btn-download" href="https://apps.volt.build/25a00368-dae2-44df-bbdb-76d07e6dced6/android.debug.apk" download>
-        <svg viewBox="0 0 24 24" fill="none" stroke="#001a0a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13m0 0l-4.5-4.5M12 16l4.5-4.5"/><path d="M4 19h16"/></svg>
-        <span class="lbl"><small>Direct APK Download</small><b>WorkHive ডাউনলোড করুন</b></span>
-      </a>
-      <a class="btn-website" href="https://tinyurl.com/worhive" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 0 1 0 18M12 3a13 13 0 0 0 0 18"/></svg>
-        <span class="lbl"><small>No install needed</small><b>ওয়েবসাইট খুলুন</b></span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">🐝 WorkHive — সব ডিপোজিট, উইথড্রয়াল ও টাস্ক এডমিন অনুমোদনে সম্পন্ন হয়। © <span id="yr"></span></div>
-</footer>
-
-<!-- REVIEW MODAL -->
-<div class="modal-overlay" id="reviewOverlay">
-  <div class="modal">
-    <div class="modal-close" onclick="closeReviewModal()">✕</div>
-    <h3>আপনার অভিজ্ঞতা শেয়ার করুন</h3>
-    <p class="hint">আপনার রিভিউ এই পেজে সবাই দেখতে পাবে</p>
-    <div class="star-picker" id="starPicker">
-      <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
-    </div>
-    <input type="text" id="revName" placeholder="আপনার নাম">
-    <textarea id="revText" placeholder="আপনার মতামত লিখুন…"></textarea>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeReviewModal()">বাতিল</button>
-      <button class="btn-submit" onclick="submitReview()">পাঠান</button>
-    </div>
+  <div id="registerPane" style="width:100%;display:none">
+    <div class="auth-field"><label>Full Name</label><input type="text" id="regName" placeholder="Enter full name" autocomplete="name"></div>
+    <div class="auth-field"><label>Username</label><input type="text" id="regUsername" placeholder="@username" autocomplete="username" style="text-transform:lowercase"></div>
+    <div class="auth-field"><label>Email Address</label><input type="email" id="regEmail" placeholder="Enter your email" autocomplete="email"></div>
+    <div class="auth-field"><label>Phone Number</label><input type="tel" id="regPhone" placeholder="+880 1X-XXXX-XXXX" autocomplete="tel"></div>
+    <div class="auth-field"><label>Country</label><select id="regCountry"><option value="">— Select Country —</option><option>Bangladesh</option><option>India</option><option>Pakistan</option><option>Nepal</option><option>Philippines</option><option>Indonesia</option><option>Nigeria</option><option>USA</option><option>UK</option><option>Other</option></select></div>
+    <div class="auth-field"><label>Password</label><div class="pass-toggle"><input type="password" id="regPass" placeholder="At least 6 characters" autocomplete="new-password" oninput="checkStrength(this.value)"><span class="pass-eye" onclick="togglePass('regPass',this)">👁</span></div><div class="strength-bar"><div class="strength-fill" id="strengthFill" style="width:0"></div></div></div>
+    <div class="auth-field"><label>Confirm Password</label><div class="pass-toggle"><input type="password" id="regConfirmPass" placeholder="Re-enter password" autocomplete="new-password"><span class="pass-eye" onclick="togglePass('regConfirmPass',this)">👁</span></div></div>
+    <div class="auth-field"><label>Referral Code (Optional)</label><input type="text" id="regRef" placeholder="e.g. WH123456" style="text-transform:uppercase"></div>
+    <div class="auth-error" id="regErr"></div>
+    <button class="btn-auth" id="regBtn" onclick="doRegister()"><span id="regBtnText">Create Account</span></button>
+    <div class="divider">or</div>
+    <button class="btn-google" onclick="doGoogle()">
+      <svg class="g-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      Register with Google
+    </button>
   </div>
 </div>
 
-<!-- AUTH MODAL (login / register — same Firebase project as the app) -->
-<div class="modal-overlay" id="authOverlay">
-  <div class="modal auth-modal">
-    <div class="modal-close" onclick="closeAuthModal()">✕</div>
-    <div id="authModalBody">
-      <div class="auth-modal-logo">🐝</div>
-      <h3>WorkHive-এ লগইন করুন</h3>
-      <p class="hint">নতুন হলে রেজিস্টার করুন, অথবা লগইন করে চালিয়ে যান</p>
-
-      <div class="auth-tabs">
-        <div class="auth-tab active" id="authTabLogin" onclick="switchAuthTab('login')">লগইন</div>
-        <div class="auth-tab" id="authTabRegister" onclick="switchAuthTab('register')">রেজিস্টার</div>
+<!-- APP SHELL -->
+<div id="appShell">
+  <div class="status-bar">
+    <span id="clockTime">9:41</span>
+    <span style="letter-spacing:1px;color:var(--text3)">WORKHIVE 🐝</span>
+    <span style="color:var(--green)">🔋</span>
+  </div>
+  <header class="topbar">
+    <div class="greet-side">
+      <div class="user-avatar-btn" id="topAvatar" onclick="goTab('profile')"><span id="topAvatarLetter">?</span></div>
+      <div><div class="greet-hello" id="greetHello">Good Morning</div><div class="greet-name" id="greetName">Loading...</div></div>
+    </div>
+    <div class="top-actions">
+      <div class="icon-btn" id="notifBtn" onclick="goTab('notifications')">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+        <span class="notif-count" id="notifCount" style="display:none">0</span>
       </div>
+    </div>
+  </header>
 
-      <!-- LOGIN PANE -->
-      <div id="authLoginPane">
-        <label class="auth-field-label">ইমেইল</label>
-        <input type="email" id="authLoginEmail" placeholder="you@example.com">
-        <label class="auth-field-label">পাসওয়ার্ড</label>
-        <input type="password" id="authLoginPass" placeholder="আপনার পাসওয়ার্ড">
-        <div class="auth-error" id="authLoginErr"></div>
-        <div class="modal-actions" style="margin-bottom:4px">
-          <button class="btn-submit" style="flex:1" id="authLoginBtn" onclick="doWebLogin()">লগইন করুন</button>
+  <main id="mainScroll">
+
+    <!-- HOME -->
+    <section class="screen active" id="screen-home">
+      <div id="siteBanner" class="demo-banner" style="margin-top:6px"></div>
+
+      <div class="wallet-compact-card">
+        <div class="wc-top">
+          <div class="wc-top-label"><span class="dot"></span>Wallet Overview</div>
+          <div class="wc-details-link" onclick="goTab('wallet')">বিস্তারিত →</div>
         </div>
-        <div class="auth-divider">অথবা</div>
-        <button class="btn-google-auth" onclick="doWebGoogleAuth()">
-          <svg width="17" height="17" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-          Google দিয়ে লগইন করুন
-        </button>
-      </div>
-
-      <!-- REGISTER PANE -->
-      <div id="authRegisterPane" style="display:none">
-        <label class="auth-field-label">পূর্ণ নাম</label>
-        <input type="text" id="authRegName" placeholder="আপনার নাম">
-        <label class="auth-field-label">ইমেইল</label>
-        <input type="email" id="authRegEmail" placeholder="you@example.com">
-        <label class="auth-field-label">ফোন নম্বর</label>
-        <input type="tel" id="authRegPhone" placeholder="+880 1XXXXXXXXX">
-        <label class="auth-field-label">পাসওয়ার্ড</label>
-        <input type="password" id="authRegPass" placeholder="কমপক্ষে ৬ ক্যারেক্টার">
-        <label class="auth-field-label">রেফারেল কোড (ঐচ্ছিক)</label>
-        <input type="text" id="authRegRef" placeholder="e.g. WH123456" style="text-transform:uppercase">
-        <div class="auth-error" id="authRegErr"></div>
-        <div class="modal-actions" style="margin-bottom:4px">
-          <button class="btn-submit" style="flex:1" id="authRegBtn" onclick="doWebRegister()">অ্যাকাউন্ট তৈরি করুন</button>
+        <div class="wc-hero-row">
+          <div><div class="wc-hero-label">Available Balance</div><div class="wc-hero-amt" id="homeBalance">$0.00</div></div>
+          <button class="wc-withdraw-btn" onclick="goTab('wallet')">⬆️ Withdraw</button>
         </div>
-        <div class="auth-divider">অথবা</div>
-        <button class="btn-google-auth" onclick="doWebGoogleAuth()">
-          <svg width="17" height="17" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-          Google দিয়ে রেজিস্টার করুন
-        </button>
+        <div class="wc-strip">
+          <div class="wc-cell"><div class="wc-cell-v" id="homePending" style="color:var(--gold)">$0.00</div><div class="wc-cell-l">Pending</div></div>
+          <div class="wc-cell"><div class="wc-cell-v" id="homeEarned" style="color:var(--blue)">$0.00</div><div class="wc-cell-l">Earned</div></div>
+          <div class="wc-cell"><div class="wc-cell-v" id="homeWithdrawn" style="color:var(--purple)">$0.00</div><div class="wc-cell-l">Withdrawn</div></div>
+        </div>
       </div>
 
-      <div class="auth-note">🔒 এটি আপনার WorkHive অ্যাপের মতো একই অ্যাকাউন্ট — এখানে সাইন করলে অ্যাপেও একই ইমেইল/পাসওয়ার্ড দিয়ে লগইন করতে পারবেন।</div>
+      <div class="combo-stats">
+        <div class="combo-cell"><div class="combo-ico" style="background:var(--gold-dim)">🔥</div><div class="combo-v" id="homeStreak">0 days</div><div class="combo-l">Streak</div></div>
+        <div class="combo-cell"><div class="combo-ico" style="background:var(--green-dim)">✅</div><div class="combo-v" id="homeTasks">0</div><div class="combo-l">Completed</div></div>
+        <div class="combo-cell"><div class="combo-ico" style="background:var(--blue-dim)">🎯</div><div class="combo-v" id="homeAccuracy" style="color:var(--blue)">0%</div><div class="combo-l">Accuracy</div></div>
+      </div>
+
+      <div class="sec-title" style="margin-top:4px"><h3>Quick Access</h3></div>
+      <div class="qa-primary-row">
+        <div class="qa-primary jobs" onclick="goTab('tasks')"><div class="qa-primary-ico">💼</div><div><div class="qa-primary-label">Find Jobs</div><div class="qa-primary-sub">Browse available tasks</div></div></div>
+        <div class="qa-primary wallet2" onclick="goTab('wallet')"><div class="qa-primary-ico">💳</div><div><div class="qa-primary-label">Withdraw</div><div class="qa-primary-sub" id="withdrawMinLabel">Min $5.00 · bKash / Nagad / USDT</div></div></div>
+      </div>
+      <div class="qa-secondary-row">
+        <div class="qa-sec" onclick="goTab('mytasks')"><div class="qa-sec-ico" style="background:var(--purple-dim)">📋</div><div class="qa-sec-label">My Tasks</div></div>
+        <div class="qa-sec" onclick="goTab('referral')"><div class="qa-sec-ico" style="background:rgba(255,179,0,.08)">👥</div><div class="qa-sec-label">Refer &amp; Earn</div></div>
+        <div class="qa-sec" onclick="goTab('spin')"><div class="qa-sec-ico" style="background:var(--red-dim)">🎡</div><div class="qa-sec-label">Daily Spin</div></div>
+        <div class="qa-sec" onclick="goTab('history')"><div class="qa-sec-ico" style="background:var(--cyan-dim)">📜</div><div class="qa-sec-label">History</div></div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-card"><div class="sv" id="homeWorkerLv" style="color:var(--green)">L1</div><div class="sl">Worker Lv</div></div>
+        <div class="stat-card"><div class="sv" id="homeRefCount" style="color:var(--purple)">0</div><div class="sl">Referrals</div></div>
+        <div class="stat-card"><div class="sv" id="homeJobsPosted" style="color:var(--blue)">0</div><div class="sl">Jobs Posted</div></div>
+      </div>
+
+      <div class="two-col-row">
+        <div class="two-col"><div class="sec-title"><h3>🔥 Featured</h3></div><div id="homeTaskList"></div></div>
+        <div class="two-col"><div class="sec-title"><h3>🔄 Activity</h3><a onclick="goTab('history')">All →</a></div><div id="recentActivityHome"></div></div>
+      </div>
+
+      <div class="sec-title"><h3>🏆 Top Earners</h3></div>
+      <div id="homeLBPreview"></div>
+    </section>
+
+    <!-- TASKS -->
+    <section class="screen" id="screen-tasks">
+      <div class="sec-title" style="margin-top:13px"><h3>Micro Tasks</h3><span id="taskCountBadge" style="font-size:11.5px;color:var(--text3);font-weight:700"></span></div>
+      <div class="demo-banner">📌 Only admin-approved tasks shown. Submit proof — admin verifies and credits your balance.</div>
+      <div class="chip-row" id="categoryChips"></div>
+      <div id="taskListFull"></div>
+    </section>
+
+    <!-- MY TASKS -->
+    <section class="screen" id="screen-mytasks">
+      <div class="sec-title" style="margin-top:13px"><h3>📋 My Tasks</h3></div>
+      <div class="mytask-filter history-filter">
+        <div class="h-chip active" onclick="filterMyTasks('all',this)">All</div>
+        <div class="h-chip" onclick="filterMyTasks('pending',this)">⏳ Pending</div>
+        <div class="h-chip" onclick="filterMyTasks('approved',this)">✅ Approved</div>
+        <div class="h-chip" onclick="filterMyTasks('rejected',this)">❌ Rejected</div>
+        <div class="h-chip" onclick="filterMyTasks('spin',this)">🎡 Spin</div>
+      </div>
+      <div id="myTasksList"></div>
+    </section>
+
+    <!-- POST (job posting — replaces the old "Coming Soon" placeholder) -->
+    <section class="screen" id="screen-post">
+      <div class="sec-title" style="margin-top:13px"><h3>📢 Post a Job</h3></div>
+
+      <div class="post-disabled-wrap" id="postDisabledWrap" style="display:none">
+        <div class="coming-soon-icon-box">🚧</div>
+        <div class="coming-soon-title">Posting Paused</div>
+        <div class="coming-soon-desc">এডমিন এই মুহূর্তে নতুন জব পোস্টিং সাময়িকভাবে বন্ধ রেখেছেন। শীঘ্রই আবার চালু হবে।</div>
+      </div>
+
+      <div id="postActiveWrap">
+        <div class="post-tabs">
+          <div class="post-tab active" id="postTabPost" onclick="switchPostTab('post')">➕ নতুন জব</div>
+          <div class="post-tab" id="postTabMine" onclick="switchPostTab('mine')">📂 আমার জবসমূহ</div>
+        </div>
+
+        <div id="postFormPane">
+          <div class="post-limit-banner" id="postApprovalNote">জব পোস্ট করার পর এডমিন রিভিউ করে অনুমোদন দিলে এটি Tasks তালিকায় দেখা যাবে।</div>
+
+          <div class="field"><label>জব টাইটেল</label><input type="text" id="postTitle" placeholder="e.g. Follow our Facebook Page"></div>
+          <div class="field"><label>ক্যাটাগরি</label><select id="postCategory"></select></div>
+
+          <div class="field"><label>টাস্ক টাইপ</label></div>
+          <div class="post-type-grid">
+            <div class="post-type-pill active" onclick="selectPostType(this,'proof')"><div class="ptp-ico">📸</div><div class="ptp-label">Proof Upload</div></div>
+            <div class="post-type-pill" onclick="selectPostType(this,'link')"><div class="ptp-ico">🔗</div><div class="ptp-label">Visit Link</div></div>
+            <div class="post-type-pill" onclick="selectPostType(this,'dailylink')"><div class="ptp-ico">🔁</div><div class="ptp-label">Daily Repeat</div></div>
+          </div>
+
+          <div class="field" id="postLinkField" style="display:none"><label>লিংক</label><input type="url" id="postLink" placeholder="https://..."></div>
+          <div class="field" id="postShotField"><label>কতটি স্ক্রিনশট লাগবে</label><input type="number" id="postShotCount" min="1" max="5" value="1"></div>
+
+          <div class="field"><label>নির্দেশনা (Instructions)</label><textarea id="postInstructions" rows="3" placeholder="ওয়ার্কারকে ধাপে ধাপে কী করতে হবে লিখুন..."></textarea></div>
+
+          <div class="field">
+            <label id="postRewardHint">প্রতি ওয়ার্কারের রিওয়ার্ড</label>
+            <input type="number" id="postReward" step="0.01" placeholder="0.05" oninput="updatePostBudgetPreview()">
+          </div>
+          <div class="field">
+            <label id="postSlotsHint">মোট স্লট (কতজন করবে)</label>
+            <input type="number" id="postSlots" placeholder="50" oninput="updatePostBudgetPreview()">
+          </div>
+          <div class="field"><label>দেশ</label><select id="postCountry"><option value="Global">Global</option><option>Bangladesh</option><option>India</option><option>Pakistan</option><option>Nepal</option><option>Philippines</option><option>Indonesia</option><option>Nigeria</option><option>USA</option><option>UK</option></select></div>
+
+          <div class="post-budget-card">
+            <div class="pbc-row"><span>প্রতি ওয়ার্কার</span><span class="v" id="postPreviewPerWorker">$0.00</span></div>
+            <div class="pbc-row"><span>ওয়ার্কার পেমেন্ট মোট</span><span class="v" id="postPreviewWorkerTotal">$0.00</span></div>
+            <div class="pbc-row"><span>প্ল্যাটফর্ম ফি</span><span class="v" id="postPreviewPlatformFee">$0.00</span></div>
+            <div class="pbc-row total"><span>সর্বমোট বাজেট</span><span class="v" id="postPreviewGrandTotal">$0.00</span></div>
+          </div>
+
+          <button class="btn-primary" id="postSubmitBtn" onclick="submitJobPost()">📤 রিভিউয়ের জন্য পাঠান</button>
+        </div>
+
+        <div id="postMinePane" style="display:none">
+          <div class="mytask-filter history-filter">
+            <div class="h-chip active" onclick="filterMyPostedJobs('all',this)">All</div>
+            <div class="h-chip" onclick="filterMyPostedJobs('pending_review',this)">⏳ Review</div>
+            <div class="h-chip" onclick="filterMyPostedJobs('approved',this)">✅ Live</div>
+            <div class="h-chip" onclick="filterMyPostedJobs('rejected',this)">❌ Rejected</div>
+          </div>
+          <div id="myPostedJobsList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WALLET -->
+    <section class="screen" id="screen-wallet">
+      <div class="sec-title" style="margin-top:13px"><h3>💳 Wallet</h3></div>
+      <div class="wallet-hero">
+        <div class="wallet-hero-label">Available Balance</div>
+        <div class="wallet-hero-balance" id="walletBalance">$0.00</div>
+        <div class="wallet-hero-sub">Ready to withdraw anytime</div>
+        <div class="wallet-stats-row">
+          <div class="wallet-stat-cell"><div class="wsc-v" id="walletPending" style="color:var(--gold)">$0.00</div><div class="wsc-l">Pending</div></div>
+          <div class="wallet-stat-cell" style="border-left:1px solid rgba(255,255,255,.06);border-right:1px solid rgba(255,255,255,.06)"><div class="wsc-v" id="walletTotalEarned" style="color:var(--blue)">$0.00</div><div class="wsc-l">Total Earned</div></div>
+          <div class="wallet-stat-cell"><div class="wsc-v" id="walletWithdrawn" style="color:var(--purple)">$0.00</div><div class="wsc-l">Withdrawn</div></div>
+        </div>
+      </div>
+
+      <div class="withdraw-form-card">
+        <div class="wfc-title">⬆️ Withdraw Funds</div>
+        <div class="info-banner" id="withdrawInfoBanner">⚠️ Withdrawal requests reviewed by admin. Processing: 24–48 hours.</div>
+        <p style="font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px">Select Method</p>
+        <div class="method-selector" id="withdrawMethodGrid">
+          <div class="method-pill active" data-method="bKash" onclick="selectWithdrawMethod(this)"><span class="mp-emoji">📱</span>bKash</div>
+          <div class="method-pill" data-method="Nagad" onclick="selectWithdrawMethod(this)"><span class="mp-emoji">💳</span>Nagad</div>
+          <div class="method-pill" data-method="Rocket" onclick="selectWithdrawMethod(this)"><span class="mp-emoji">🚀</span>Rocket</div>
+          <div class="method-pill" data-method="USDT" onclick="selectWithdrawMethod(this)"><span class="mp-emoji">₮</span>USDT</div>
+          <div class="method-pill" data-method="Bank" onclick="selectWithdrawMethod(this)"><span class="mp-emoji">🏦</span>Bank</div>
+        </div>
+        <div class="wf-field"><label id="withdrawAmtLabel">Amount ($) — Min $5.00</label><input type="number" id="withdrawAmt" placeholder="5.00" min="5" step="0.01" oninput="updateWithdrawPreview()"></div>
+        <div class="wf-field"><label>Receiving Account / Address</label><input type="text" id="withdrawNumber" placeholder="e.g. 01XXXXXXXXX"></div>
+        <div class="wf-field"><label>Note (Optional)</label><input type="text" id="withdrawNotes" placeholder="Any notes for admin..."></div>
+        <div class="withdraw-preview-row"><div class="wpr-l">You'll receive <span style="color:var(--text3)">(after <span id="withdrawFeeDisplay">5%</span> fee)</span></div><div class="wpr-v" id="withdrawNetDisplay">—</div></div>
+        <button class="btn-primary" onclick="doWithdraw()">📤 Submit Withdrawal Request</button>
+      </div>
+
+      <div class="tx-section-header">
+        <h3>Transaction History</h3>
+        <div class="tx-filter-btns">
+          <div class="tx-filter-btn active" onclick="filterTx('all',this)">All</div>
+          <div class="tx-filter-btn" onclick="filterTx('pos',this)">Income</div>
+          <div class="tx-filter-btn" onclick="filterTx('neg',this)">Expense</div>
+        </div>
+      </div>
+      <div id="txList" style="padding:0 2px"></div>
+    </section>
+
+    <!-- HISTORY -->
+    <section class="screen" id="screen-history">
+      <div class="sec-title" style="margin-top:13px"><h3>📜 Task History</h3></div>
+      <div class="history-filter">
+        <div class="h-chip active" onclick="filterHistory('all',this)">All</div>
+        <div class="h-chip" onclick="filterHistory('completed',this)">Completed</div>
+        <div class="h-chip" onclick="filterHistory('pending',this)">Pending</div>
+        <div class="h-chip" onclick="filterHistory('spin',this)">Spin</div>
+      </div>
+      <div id="historyList"></div>
+    </section>
+
+    <!-- NOTIFICATIONS -->
+    <section class="screen" id="screen-notifications">
+      <div class="sec-title" style="margin-top:13px"><h3>🔔 Notifications</h3><a onclick="markAllRead()">Mark all read</a></div>
+      <div id="notifList"></div>
+    </section>
+
+    <!-- REFERRAL -->
+    <section class="screen" id="screen-referral">
+      <div class="sec-title" style="margin-top:13px"><h3>👥 Referral Program</h3></div>
+      <div class="ref-hero">
+        <div class="ref-hero-label">Your Referral Code</div>
+        <div class="ref-hero-code" id="refCodePage">WH000000</div>
+        <div class="ref-copy-row"><button class="ref-btn copy" onclick="copyRef()">📋 Copy Code</button><button class="ref-btn share" onclick="shareRef()">📤 Share Link</button></div>
+      </div>
+      <div class="ref-earn-grid">
+        <div class="ref-gen-card g1"><div class="ref-gen-badge">Gen 1</div><div class="ref-gen-pct" id="refGen1Amount">$0.50</div><div class="ref-gen-label">Direct Bonus</div></div>
+        <div class="ref-gen-card g2"><div class="ref-gen-badge">Gen 2</div><div class="ref-gen-pct" id="refGen2Amount">$0.25</div><div class="ref-gen-label">From Their Ref</div></div>
+        <div class="ref-gen-card g3"><div class="ref-gen-badge">Gen 3</div><div class="ref-gen-pct" id="refGen3Amount">$0.10</div><div class="ref-gen-label">Deep Network</div></div>
+      </div>
+      <div class="ref-stats-row">
+        <div class="ref-stat-card"><div class="ref-stat-ico total">👥</div><div><div class="ref-stat-v" id="refStatTotal">0</div><div class="ref-stat-l">Total Refs</div></div></div>
+        <div class="ref-stat-card"><div class="ref-stat-ico earned">💵</div><div><div class="ref-stat-v" id="refStatEarned" style="color:var(--green)">$0.00</div><div class="ref-stat-l">Ref Earnings</div></div></div>
+      </div>
+      <div class="gen-tree-section">
+        <div class="gen-tree-title"><span>🌳 My Network</span><span style="font-size:10.5px;color:var(--text3);font-weight:600">Tap user to view</span></div>
+        <div class="gen-tabs">
+          <div class="gen-tab active g1-tab" onclick="switchGenTab(1,this)">Gen 1 <span id="g1Count"></span></div>
+          <div class="gen-tab g2-tab" onclick="switchGenTab(2,this)">Gen 2 <span id="g2Count"></span></div>
+          <div class="gen-tab g3-tab" onclick="switchGenTab(3,this)">Gen 3 <span id="g3Count"></span></div>
+        </div>
+        <div id="genTreeList"><div class="history-empty"><div class="big">🌱</div>No referrals yet.</div></div>
+      </div>
+      <div class="ref-howto">
+        <div class="ref-howto-title">💡 How 3-Generation Works</div>
+        <div class="howto-step"><div class="howto-num">1</div><div class="howto-body"><b>Share your code</b> — Send referral code or link to friends.</div></div>
+        <div class="howto-step"><div class="howto-num">2</div><div class="howto-body" id="howtoStep2"><b>Gen 1 earns $0.50</b> — When your direct referral joins.</div></div>
+        <div class="howto-step"><div class="howto-num">3</div><div class="howto-body" id="howtoStep3"><b>Gen 2 earns $0.25</b> — When your referral's referral joins.</div></div>
+        <div class="howto-step"><div class="howto-num">4</div><div class="howto-body" id="howtoStep4"><b>Gen 3 earns $0.10</b> — Three levels deep — passive income!</div></div>
+      </div>
+    </section>
+
+    <!-- SUPPORT -->
+    <section class="screen" id="screen-support">
+      <div class="sec-title" style="margin-top:13px"><h3>🎧 Support Center</h3></div>
+      <div class="demo-banner">📌 আমরা সাহায্য করতে এখানে আছি।</div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 15px;border-bottom:1px solid var(--border);font-size:12.5px"><span style="color:var(--text2);font-weight:600">📧 Email</span><span id="supportEmail" style="font-weight:700">support@workhive.app</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 15px;border-bottom:1px solid var(--border);font-size:12.5px"><span style="color:var(--text2);font-weight:600">💬 Live Chat</span><span id="supportHours" style="font-weight:700;color:var(--green)">9 AM – 11 PM</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 15px;font-size:12.5px"><span style="color:var(--text2);font-weight:600">⏱️ Avg Response</span><span id="supportResponse" style="font-weight:700">Within 12 hours</span></div>
+      </div>
+      <button class="btn-primary" style="margin-bottom:18px" id="supportEmailBtn" onclick="window.open('mailto:support@workhive.app')">✉️ Contact Support</button>
+      <div class="sec-title"><h3>❓ FAQ</h3></div>
+      <div id="faqList" style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden">
+        <div style="padding:13px 15px;border-bottom:1px solid var(--border)"><div style="font-size:12px;font-weight:700;margin-bottom:4px">টাকা তুলতে কত সময় লাগে?</div><div style="font-size:11.5px;color:var(--text2)">এডমিন অনুমোদনের পর ২৪–৪৮ ঘণ্টা।</div></div>
+        <div style="padding:13px 15px;border-bottom:1px solid var(--border)"><div style="font-size:12px;font-weight:700;margin-bottom:4px">Task complete করলে কি সাথে সাথে টাকা পাই?</div><div style="font-size:11.5px;color:var(--text2)">না। Proof Submit করার পর এডমিন approve করলে balance আসে।</div></div>
+        <div style="padding:13px 15px"><div style="font-size:12px;font-weight:700;margin-bottom:4px">রেফারেল থেকে কত আয় করা যায়?</div><div style="font-size:11.5px;color:var(--text2)" id="faqRefText">Gen 1: $0.50, Gen 2: $0.25, Gen 3: $0.10 প্রতি সফল রেফারেলে।</div></div>
+      </div>
+    </section>
+
+    <!-- EDIT PROFILE -->
+    <section class="screen" id="screen-editprofile">
+      <div class="sec-title" style="margin-top:13px"><h3>✏️ Edit Profile</h3></div>
+      <div style="display:flex;justify-content:center;margin-bottom:18px">
+        <div style="position:relative;display:inline-block">
+          <div class="profile-avatar-big" style="width:76px;height:76px;font-size:30px" id="editAvatarPreview">?</div>
+          <div class="avatar-edit-btn" onclick="document.getElementById('avatarInput').click()">📷</div>
+          <input type="file" id="avatarInput" accept="image/*" style="display:none" onchange="previewAvatar(this)">
+        </div>
+      </div>
+      <div class="field"><label>Full Name *</label><input type="text" id="editName" placeholder="Your name"></div>
+      <div class="field"><label>Username</label><input type="text" id="editUsername" placeholder="@username" style="text-transform:lowercase"></div>
+      <div class="field"><label>Country</label><select id="editCountry"><option value="">— Select Country —</option><option>Bangladesh</option><option>India</option><option>Pakistan</option><option>Nepal</option><option>Philippines</option><option>Indonesia</option><option>Nigeria</option><option>USA</option><option>UK</option><option>Other</option></select></div>
+      <div class="field"><label>Bio</label><textarea id="editBio" placeholder="Tell something about yourself..." rows="3" maxlength="150"></textarea></div>
+      <div class="field"><label>Phone Number</label><input type="tel" id="editPhone" placeholder="+880 1XXXXXXXXX"></div>
+      <button class="btn-primary" onclick="saveProfile()">✅ Save Changes</button>
+    </section>
+
+    <!-- PROFILE -->
+    <section class="screen" id="screen-profile">
+      <div class="profile-hero">
+        <div style="position:relative;margin-bottom:11px">
+          <div class="profile-avatar-big" id="profileAvatarBig">?</div>
+          <div class="avatar-edit-btn" onclick="goTab('editprofile')" style="bottom:-2px;right:-2px">✏️</div>
+        </div>
+        <div class="profile-name-big" id="profileName">Loading</div>
+        <div class="profile-username" id="profileUsername">@username</div>
+        <div style="font-size:10.5px;color:var(--text3);font-weight:600;margin-bottom:2px">Member ID: <span id="profileMemberId">WH000000</span></div>
+        <div class="profile-email" id="profileEmail">—</div>
+        <div id="profileBio" style="font-size:11.5px;color:var(--text2);margin-bottom:9px;text-align:center;display:none"></div>
+        <div class="profile-badges" id="profileBadges"><span class="p-badge worker">🐝 Worker L1</span><span class="p-badge unverified">⚠ KYC Pending</span></div>
+      </div>
+
+      <div class="level-bar-card">
+        <div class="level-top"><span>Worker Level</span><span style="color:var(--green);font-weight:900" id="workerLevelLabel">Level 1 / 5</span></div>
+        <div class="prog-track"><div class="prog-fill" id="workerLevelFill" style="width:10%;background:var(--green)"></div></div>
+        <div style="font-size:10.5px;color:var(--text3);margin-top:5px" id="workerLevelHint">Complete 50 more tasks to reach Level 2</div>
+      </div>
+
+      <div class="profile-stats-grid">
+        <div class="profile-stat-cell"><div class="psc-icon tasks">✅</div><div class="psc-label">Tasks</div><div class="psc-value" id="profileTasks">0</div></div>
+        <div class="profile-stat-cell"><div class="psc-icon earned">💵</div><div class="psc-label">Earned</div><div class="psc-value" id="profileEarned" style="color:var(--blue)">$0.00</div></div>
+        <div class="profile-stat-cell"><div class="psc-icon withdrawn">💸</div><div class="psc-label">Withdrawn</div><div class="psc-value" id="profileWithdrawn" style="color:var(--gold)">$0.00</div></div>
+        <div class="profile-stat-cell"><div class="psc-icon referrals">👥</div><div class="psc-label">Gen 1 Refs</div><div class="psc-value" id="profileReferrals" style="color:var(--purple)">0</div></div>
+        <div class="profile-stat-cell"><div class="psc-icon country">🌍</div><div class="psc-label">Country</div><div class="psc-value" id="profileCountry" style="font-size:11.5px">—</div></div>
+        <div class="profile-stat-cell"><div class="psc-icon phone">📞</div><div class="psc-label">Phone</div><div class="psc-value" id="profilePhone" style="font-size:11.5px">—</div></div>
+      </div>
+
+      <div class="joined-row"><span style="font-size:15px;opacity:.5">📅</span><span style="color:var(--text2);font-weight:600;flex:1">Joined</span><span style="font-weight:700" id="profileJoined">—</span></div>
+
+      <div class="ref-box">
+        <div><div style="font-size:10px;color:var(--text3);font-weight:700;margin-bottom:3px;text-transform:uppercase;letter-spacing:.4px">Referral Code</div><div class="ref-code" id="refCode">WH000000</div></div>
+        <div style="display:flex;gap:5px"><div class="ref-copy" onclick="copyRef()">Copy</div><div class="ref-copy" style="background:var(--purple-dim);color:var(--purple);border:1px solid rgba(224,64,251,.25)" onclick="goTab('referral')">3-Gen →</div></div>
+      </div>
+
+      <div class="account-settings-title">Account &amp; Settings</div>
+      <div class="account-settings-list">
+        <div class="account-setting-row" onclick="goTab('editprofile')"><div class="asr-ico edit">✏️</div><div class="asr-txt"><div class="asr-label">Edit Profile</div><div class="asr-sub">Update name, bio, photo</div></div><div class="asr-arrow">›</div></div>
+        <div class="account-setting-row" onclick="openChangePassword()"><div class="asr-ico pw">🔒</div><div class="asr-txt"><div class="asr-label">Change Password</div><div class="asr-sub">Update your login password</div></div><div class="asr-arrow">›</div></div>
+        <div class="account-setting-row" onclick="goTab('referral')"><div class="asr-ico ref">👥</div><div class="asr-txt"><div class="asr-label">Referral Program</div><div class="asr-sub">3-generation earnings</div></div><div class="asr-arrow">›</div></div>
+        <div class="account-setting-row" onclick="goTab('post');switchPostTab('mine')"><div class="asr-ico myjobs">📢</div><div class="asr-txt"><div class="asr-label">My Posted Jobs</div><div class="asr-sub">Track jobs you've posted</div></div><div class="asr-arrow">›</div></div>
+        <div class="account-setting-row" onclick="goTab('history')"><div class="asr-ico hist">📋</div><div class="asr-txt"><div class="asr-label">Task History</div><div class="asr-sub">View all submissions</div></div><div class="asr-arrow">›</div></div>
+        <div class="account-setting-row" onclick="goTab('spin')"><div class="asr-ico spin">🎡</div><div class="asr-txt"><div class="asr-label">Lucky Spin</div><div class="asr-sub">Daily free spin rewards</div></div><div class="asr-arrow">›</div></div>
+        <div class="account-setting-row" onclick="goTab('support')"><div class="asr-ico sup">🎧</div><div class="asr-txt"><div class="asr-label">Support</div><div class="asr-sub">Help center & FAQ</div></div><div class="asr-arrow">›</div></div>
+      </div>
+
+      <div class="danger-zone">
+        <h4>⚠ Danger Zone</h4>
+        <button class="btn-danger" onclick="doLogoutConfirm()">🚪 Log Out</button>
+        <button class="btn-danger" onclick="confirmDeleteAccount()">🗑️ Delete Account</button>
+      </div>
+    </section>
+
+    <!-- LUCKY SPIN -->
+    <section class="screen" id="screen-spin">
+      <div class="sec-title" style="margin-top:13px"><h3>🎡 Lucky Spin</h3></div>
+      <div class="demo-banner" id="spinBannerMsg">📌 Spin once per day and win rewards! Credited to your balance automatically.</div>
+      <div class="spin-container">
+        <div class="spin-wheel-wrap"><canvas id="spinCanvas" width="260" height="260"></canvas><div class="spin-pointer"></div><div class="spin-center">🐝</div></div>
+        <button class="btn-spin" id="spinBtn" onclick="doSpin()">Spin!</button>
+        <div class="spin-info" id="spinInfo">Today's spin is available 🎉</div>
+      </div>
+      <div class="spin-history"><h4>Spin History</h4><div id="spinHistoryList"><p style="color:var(--text3);font-size:11.5px;text-align:center;padding:14px 0">No spins yet.</p></div></div>
+    </section>
+
+  </main>
+
+  <!-- NAV BAR -->
+  <nav class="tabbar">
+    <div class="tab active" data-tab="home" onclick="goTab('home')"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span><div class="tab-dot"></div></div>
+    <div class="tab" data-tab="tasks" onclick="goTab('tasks')"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Tasks</span><div class="tab-dot"></div></div>
+    <div class="tab" data-tab="post" onclick="goTab('post')"><div class="fab"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div><span>Post</span></div>
+    <div class="tab" data-tab="wallet" onclick="goTab('wallet')"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="14" rx="2.5"/><path d="M2 10h20M6 15h3"/></svg><span>Wallet</span><div class="tab-dot"></div></div>
+    <div class="tab" data-tab="profile" onclick="goTab('profile')"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><span>Profile</span><div class="tab-dot"></div></div>
+  </nav>
+
+  <!-- FLOATING HELPLINE BUTTON -->
+  <div id="helpFab">
+    <div class="lang-wrap" id="langWrap">
+      <div class="lang-pill bn" onclick="openSupport('bn')"><div class="flag">বাং</div><div><div class="txt">বাংলা</div><div class="sub">বাংলায় কথা বলুন</div></div></div>
+      <div class="lang-pill en" onclick="openSupport('en')"><div class="flag">EN</div><div><div class="txt">English</div><div class="sub">Chat in English</div></div></div>
+    </div>
+    <div class="fab-tile" onclick="toggleHelpLang()">
+      <div class="fab-glow"></div><div class="fab-dot" id="helpFabDot"></div>
+      <div class="fab-btn-inner"><div class="fab-ring"></div><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></div>
     </div>
   </div>
+
+  <!-- SUPPORT CHAT SCREEN -->
+  <div id="supportScreen">
+    <div class="sup-header">
+      <div class="sup-back" onclick="closeSupport()"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div>
+      <div class="sup-title"><div class="t" id="supTitle">Help & Support</div><div class="s" id="supSub">We're here to help you</div></div>
+      <div class="sup-online"><span class="dot"></span><span id="supOnlineTxt">Online</span></div>
+    </div>
+    <div class="sup-body" id="supBody">
+      <div class="sup-hero">
+        <div class="sup-hero-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></div>
+        <h2 id="heroTitle">Hi, How can we help you?</h2>
+        <p id="heroSub">Send us a message and we'll get back to you as soon as possible.</p>
+        <div class="sup-tags"><div class="sup-tag" id="tag1">⚡ Fast Reply</div><div class="sup-tag" id="tag2">🕐 24/7 Support</div><div class="sup-tag" id="tag3">✅ Trusted Support</div></div>
+      </div>
+      <div class="sup-daydiv" id="dayDiv">Today</div>
+      <div id="msgArea"></div>
+    </div>
+    <div class="sup-inputbar">
+      <div class="sup-attach">📎</div>
+      <input type="text" id="supInput" placeholder="Type your message...">
+      <div class="sup-send" onclick="sendSupportMsg()"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></div>
+    </div>
+  </div>
+
+  <!-- MODALS -->
+  <div class="overlay" id="taskOverlay" onclick="if(event.target===this)closeTaskModal()">
+    <div class="modal-sheet"><span class="close-x" onclick="closeTaskModal()">✕</span><div class="modal-handle"></div><div id="modalContent"></div></div>
+  </div>
+  <div class="overlay" id="confirmOverlay"><div class="modal-sheet"><div id="confirmContent"></div></div></div>
+  <div class="overlay" id="refUserOverlay" onclick="if(event.target===this)closeRefUserModal()">
+    <div class="modal-sheet"><span class="close-x" onclick="closeRefUserModal()">✕</span><div class="modal-handle"></div><div id="refUserContent"></div></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, serverTimestamp, getCountFromServer, doc, setDoc, getDoc, updateDoc, increment, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { getAuth, signInAnonymously, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, updateProfile, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-// Same Firebase project WorkHive's app & admin panel already use — reviews,
-// stats AND now login/register on this landing page all read/write to that
-// same project, so an account created here is the exact same account used
-// inside the WorkHive app.
-const firebaseConfig = {
-  apiKey: "AIzaSyCeA-269WRHJCehg9Z__tlre_EbZcfanlY",
-  authDomain: "workhive-35207.firebaseapp.com",
-  projectId: "workhive-35207",
-  storageBucket: "workhive-35207.firebasestorage.app",
-  messagingSenderId: "567915693960",
-  appId: "1:567915693960:web:db6b3c3165c125c8d51c3d"
-};
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
-
-// Expose what the plain <script> block below needs
-window._authDb = db;
-window._authAuth = auth;
-window._authFns = {
-  createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup,
-  googleProvider, updateProfile, signOut,
-  doc, setDoc, getDoc, updateDoc, increment,
-  collection, addDoc, getDocs, query, where, serverTimestamp
-};
-
-// Anonymous session used only for the public reviews widget below — kept
-// separate from the real login/register flow so it never interferes with it.
-signInAnonymously(auth).catch(() => {});
-
-// Track real (non-anonymous) auth state to update the nav "লগইন" button
-window._isLoggedIn = false;
-onAuthStateChanged(auth, (user) => {
-  const btn = document.getElementById('navLoginBtn');
-  if (!btn) return;
-  if (user && !user.isAnonymous) {
-    window._isLoggedIn = true;
-    btn.classList.add('logged-in');
-    const shortName = (user.displayName || user.email || 'Account').split(' ')[0];
-    btn.textContent = '✓ ' + shortName;
-    btn.title = 'লগ-আউট করতে ক্লিক করুন';
-  } else {
-    window._isLoggedIn = false;
-    btn.classList.remove('logged-in');
-    btn.textContent = 'লগইন';
-    btn.title = '';
-  }
-});
-
-window.handleNavLoginClick = function () {
-  if (window._isLoggedIn) {
-    signOut(window._authAuth).catch(() => {});
-  } else {
-    openAuthModal('login');
-  }
-};
-
-window._selectedStars = 5;
-window.openReviewModal = () => document.getElementById('reviewOverlay').classList.add('show');
-window.closeReviewModal = () => document.getElementById('reviewOverlay').classList.remove('show');
-
-document.getElementById('starPicker').addEventListener('click', (e) => {
-  const v = e.target.dataset.v;
-  if (!v) return;
-  window._selectedStars = parseInt(v);
-  paintStars();
-});
-function paintStars() {
-  document.querySelectorAll('#starPicker span').forEach(s => s.classList.toggle('on', parseInt(s.dataset.v) <= window._selectedStars));
-}
-paintStars();
-
-window.submitReview = async function () {
-  const name = document.getElementById('revName').value.trim() || 'WorkHive User';
-  const text = document.getElementById('revText').value.trim();
-  if (!text) { alert('মতামত লিখুন'); return; }
-  try {
-    await addDoc(collection(db, 'appReviews'), {
-      name, text, stars: window._selectedStars, createdAt: serverTimestamp(), _ts: Date.now()
-    });
-    document.getElementById('revName').value = '';
-    document.getElementById('revText').value = '';
-    closeReviewModal();
-    loadReviews();
-  } catch (e) {
-    console.warn('Review submit failed:', e);
-    alert('পাঠাতে সমস্যা হয়েছে — আবার চেষ্টা করুন');
-  }
-};
-
-const nameColors = ['#00E676','#448AFF','#E040FB','#FFB300','#FF5252','#00BCD4'];
-function colorFor(n){ return nameColors[(n||'A').charCodeAt(0) % nameColors.length]; }
-function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-async function loadReviews() {
-  const grid = document.getElementById('reviewGrid');
-  try {
-    const snap = await getDocs(query(collection(db, 'appReviews'), orderBy('_ts', 'desc'), limit(9)));
-    const list = [];
-    snap.forEach(d => list.push(d.data()));
-    if (!list.length) {
-      grid.innerHTML = '<div class="review-empty">এখনো কোনো রিভিউ নেই — প্রথম রিভিউটি আপনার!</div>';
-      document.getElementById('ratingAvg').textContent = '—';
-      document.getElementById('ratingCount').textContent = 'কোনো রিভিউ নেই';
-      document.getElementById('stRating').textContent = 'নতুন';
-      return;
-    }
-    grid.innerHTML = list.map(r => {
-      const initial = (r.name || 'W').charAt(0).toUpperCase();
-      const c = colorFor(r.name);
-      const stars = '★'.repeat(r.stars || 5) + '☆'.repeat(5 - (r.stars || 5));
-      return `<div class="review-card">
-        <div class="review-top">
-          <div class="review-av" style="background:${c}22;color:${c}">${initial}</div>
-          <div><div class="review-name">${esc(r.name)}</div><div class="review-stars">${stars}</div></div>
-        </div>
-        <div class="review-text">${esc(r.text)}</div>
-      </div>`;
-    }).join('');
-    const avg = list.reduce((a, r) => a + (r.stars || 5), 0) / list.length;
-    document.getElementById('ratingAvg').textContent = avg.toFixed(1);
-    document.getElementById('ratingStars').textContent = '★'.repeat(Math.round(avg)) + '☆'.repeat(5 - Math.round(avg));
-    document.getElementById('ratingCount').textContent = list.length + ' জন রিভিউ দিয়েছেন';
-    document.getElementById('stRating').textContent = avg.toFixed(1) + '★';
-  } catch (e) {
-    console.warn('loadReviews failed:', e);
-    grid.innerHTML = '<div class="review-empty">রিভিউ লোড করা যায়নি</div>';
-  }
-}
-loadReviews();
-
-// Real, live user count from Firestore — no placeholder numbers.
-(async () => {
-  try {
-    const usersSnap = await getCountFromServer(collection(db, 'users'));
-    const n = usersSnap.data().count || 0;
-    document.getElementById('stUsers').textContent = n > 0 ? n.toLocaleString() : 'নতুন';
-  } catch (e) {
-    document.getElementById('stUsers').textContent = '—';
-  }
-})();
-
-document.getElementById('yr').textContent = new Date().getFullYear();
-
-// FAQ accordion
-document.querySelectorAll('.faq-item').forEach(item => {
-  item.querySelector('.faq-q').addEventListener('click', () => {
-    const wasOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-    if (!wasOpen) item.classList.add('open');
-  });
-});
-</script>
-
-<script>
-// Subtle parallax tilt on the hero 3D scene — desktop pointer only, untouched on mobile
-(function () {
-  const scene = document.getElementById('scene');
-  const wrap = document.getElementById('sceneWrap');
-  if (!scene || !wrap) return;
-  if (window.matchMedia('(pointer: fine)').matches) {
-    wrap.addEventListener('mousemove', (e) => {
-      const rect = wrap.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      scene.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 8}deg)`;
-    });
-    wrap.addEventListener('mouseleave', () => {
-      scene.style.transform = 'rotateY(0deg) rotateX(0deg)';
-    });
-  }
-})();
-</script>
-
-<!-- ══════════ LOGIN / REGISTER LOGIC (same Firebase project as the app) ══════════ -->
-<script>
-function openAuthModal(tab) {
-  document.getElementById('authOverlay').classList.add('show');
-  if (tab) switchAuthTab(tab);
-}
-function closeAuthModal() {
-  document.getElementById('authOverlay').classList.remove('show');
-}
-function switchAuthTab(tab) {
-  document.getElementById('authTabLogin').classList.toggle('active', tab === 'login');
-  document.getElementById('authTabRegister').classList.toggle('active', tab === 'register');
-  document.getElementById('authLoginPane').style.display = tab === 'login' ? 'block' : 'none';
-  document.getElementById('authRegisterPane').style.display = tab === 'register' ? 'block' : 'none';
-  document.getElementById('authLoginErr').textContent = '';
-  document.getElementById('authRegErr').textContent = '';
-}
-
-function showAuthSuccess(name) {
-  const body = document.getElementById('authModalBody');
-  body.innerHTML = `
-    <div class="auth-success-wrap">
-      <div class="auth-success-ico">✅</div>
-      <div class="auth-success-title">স্বাগতম!</div>
-      <div class="auth-success-sub">আপনার WorkHive অ্যাকাউন্ট প্রস্তুত। এখন অ্যাপ ডাউনলোড করুন অথবা ওয়েবসাইটে গিয়ে একই ইমেইল/পাসওয়ার্ড দিয়ে লগইন করে কাজ শুরু করুন।</div>
-      <div class="modal-actions" style="flex-direction:column;gap:10px">
-        <a class="btn-submit" style="text-decoration:none;display:block;text-align:center;padding:13px" href="https://apps.volt.build/25a00368-dae2-44df-bbdb-76d07e6dced6/android.debug.apk" download>📥 অ্যাপ ডাউনলোড করুন</a>
-        <a class="btn-cancel" style="text-decoration:none;display:block;text-align:center;padding:13px" href="https://tinyurl.com/worhive" target="_blank" rel="noopener">🌐 ওয়েবসাইটে যান</a>
-      </div>
-    </div>`;
-}
-
-async function doWebLogin() {
-  const email = document.getElementById('authLoginEmail').value.trim();
-  const pass = document.getElementById('authLoginPass').value;
-  const errEl = document.getElementById('authLoginErr');
-  errEl.textContent = '';
-  if (!email || !pass) { errEl.textContent = '❌ ইমেইল ও পাসওয়ার্ড দিন'; return; }
-  const btn = document.getElementById('authLoginBtn');
-  btn.disabled = true; btn.textContent = 'লগইন হচ্ছে...';
-  try {
-    const { signInWithEmailAndPassword } = window._authFns;
-    const cred = await signInWithEmailAndPassword(window._authAuth, email, pass);
-    showAuthSuccess(cred.user.displayName || email);
-  } catch (e) {
-    const msgs = {
-      'auth/wrong-password': '❌ ভুল পাসওয়ার্ড',
-      'auth/user-not-found': '❌ এই ইমেইলে কোনো অ্যাকাউন্ট নেই',
-      'auth/invalid-email': '❌ ইমেইল ফরম্যাট ভুল',
-      'auth/invalid-credential': '❌ ভুল ইমেইল বা পাসওয়ার্ড',
-      'auth/too-many-requests': '⚠ অনেকবার চেষ্টা করা হয়েছে, একটু পরে চেষ্টা করুন',
-      'auth/network-request-failed': '❌ ইন্টারনেট সংযোগ চেক করুন'
-    };
-    errEl.textContent = msgs[e.code] || ('❌ ' + e.message);
-    btn.disabled = false; btn.textContent = 'লগইন করুন';
-  }
-}
-
-async function doWebRegister() {
-  const name = document.getElementById('authRegName').value.trim();
-  const email = document.getElementById('authRegEmail').value.trim();
-  const phone = document.getElementById('authRegPhone').value.trim();
-  const pass = document.getElementById('authRegPass').value;
-  const ref = document.getElementById('authRegRef').value.trim().toUpperCase();
-  const errEl = document.getElementById('authRegErr');
-  errEl.textContent = '';
-  if (!name) { errEl.textContent = '❌ আপনার নাম লিখুন'; return; }
-  if (!email) { errEl.textContent = '❌ ইমেইল লিখুন'; return; }
-  if (!phone) { errEl.textContent = '❌ ফোন নম্বর লিখুন'; return; }
-  if (!pass || pass.length < 6) { errEl.textContent = '❌ পাসওয়ার্ড কমপক্ষে ৬ ক্যারেক্টার'; return; }
-
-  const btn = document.getElementById('authRegBtn');
-  btn.disabled = true; btn.textContent = 'তৈরি হচ্ছে...';
-  const fns = window._authFns;
-  try {
-    const cred = await fns.createUserWithEmailAndPassword(window._authAuth, email, pass);
-    await fns.updateProfile(cred.user, { displayName: name }).catch(() => {});
-
-    // Create the exact same user-document shape the app itself creates, so
-    // this account behaves identically whether the person opens the app
-    // next or comes back to this website.
-    const refCode = 'WH' + Math.random().toString(36).substr(2, 6).toUpperCase();
-    const userData = {
-      name, username: '', email, phone, bio: '', country: '', photoURL: '',
-      balance: 0, totalEarned: 0, totalWithdrawn: 0, pendingAmount: 0,
-      tasksCompleted: 0, approvedTasks: 0, accuracy: 0, streak: 0, workerLevel: 1,
-      kyc: false, kycStatus: 'pending',
-      referralCode: refCode, referredBy: ref || '', referralCount: 0, referralEarned: 0,
-      gen2Count: 0, gen3Count: 0, gen2Earned: 0, gen3Earned: 0,
-      spinLastUsed: null, isNewUser: true, status: 'active', role: 'user',
-      createdAt: fns.serverTimestamp(), lastActive: fns.serverTimestamp(),
-      deviceInfo: navigator.userAgent || '', loginCount: 1, lastLoginAt: fns.serverTimestamp(),
-      signupSource: 'landing-page'
-    };
-    await fns.setDoc(fns.doc(window._authDb, 'users', cred.user.uid), userData);
-
-    // Apply the same 3-generation referral bonus logic the app uses
-    if (ref) {
-      try {
-        const refQ = fns.query(fns.collection(window._authDb, 'users'), fns.where('referralCode', '==', ref));
-        const refSnap = await fns.getDocs(refQ);
-        refSnap.forEach(async (refDoc) => {
-          fns.updateDoc(refDoc.ref, { referralCount: fns.increment(1), referralEarned: fns.increment(0.5), balance: fns.increment(0.5), totalEarned: fns.increment(0.5) }).catch(() => {});
-        });
-      } catch (e) { console.warn('referral bonus:', e); }
-    }
-
-    showAuthSuccess(name);
-  } catch (e) {
-    const msgs = {
-      'auth/email-already-in-use': '❌ এই ইমেইলে আগে থেকেই অ্যাকাউন্ট আছে — লগইন ট্যাবে যান',
-      'auth/weak-password': '❌ পাসওয়ার্ড দুর্বল',
-      'auth/invalid-email': '❌ ইমেইল ফরম্যাট ভুল',
-      'auth/network-request-failed': '❌ ইন্টারনেট সংযোগ চেক করুন'
-    };
-    errEl.textContent = msgs[e.code] || ('❌ ' + e.message);
-    btn.disabled = false; btn.textContent = 'অ্যাকাউন্ট তৈরি করুন';
-  }
-}
-
-async function doWebGoogleAuth() {
-  try {
-    const fns = window._authFns;
-    const cred = await fns.signInWithPopup(window._authAuth, fns.googleProvider);
-    const user = cred.user;
-    // If this Google account doesn't have a user doc yet, create one
-    const ref = fns.doc(window._authDb, 'users', user.uid);
-    const snap = await fns.getDoc(ref);
-    if (!snap.exists()) {
-      const refCode = 'WH' + Math.random().toString(36).substr(2, 6).toUpperCase();
-      await fns.setDoc(ref, {
-        name: user.displayName || 'WorkHive User', username: '', email: user.email || '',
-        phone: '', bio: '', country: '', photoURL: user.photoURL || '',
-        balance: 0, totalEarned: 0, totalWithdrawn: 0, pendingAmount: 0,
-        tasksCompleted: 0, approvedTasks: 0, accuracy: 0, streak: 0, workerLevel: 1,
-        kyc: false, kycStatus: 'pending',
-        referralCode: refCode, referredBy: '', referralCount: 0, referralEarned: 0,
-        gen2Count: 0, gen3Count: 0, gen2Earned: 0, gen3Earned: 0,
-        spinLastUsed: null, isNewUser: true, status: 'active', role: 'user',
-        createdAt: fns.serverTimestamp(), lastActive: fns.serverTimestamp(),
-        deviceInfo: navigator.userAgent || '', loginCount: 1, lastLoginAt: fns.serverTimestamp(),
-        signupSource: 'landing-page-google'
-      });
-    }
-    showAuthSuccess(user.displayName || user.email);
-  } catch (e) {
-    if (e.code !== 'auth/cancelled-popup-request' && e.code !== 'auth/popup-closed-by-user') {
-      const errEl = document.getElementById('authTabLogin').classList.contains('active')
-        ? document.getElementById('authLoginErr') : document.getElementById('authRegErr');
-      if (errEl) errEl.textContent = '❌ Google লগইন ব্যর্থ হয়েছে';
-    }
-  }
-}
-</script>
+<script type="module" src="js/main.js"></script>
 </body>
 </html>
