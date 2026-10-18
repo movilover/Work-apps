@@ -1,0 +1,646 @@
+# ═══════════════════════════════════════════════════════════════════════
+#  WorkHive — Android APK বিল্ডার (এই একটি ফাইলই যথেষ্ট)
+#
+#  কীভাবে ব্যবহার করবেন:
+#   1) নতুন Public GitHub রিপোজিটরি বানান (যেমন WorkHive-Android)
+#   2) এই ফাইলটা রিপোজিটরিতে  .github/workflows/build-apk.yml  নামে রাখুন
+#   3) নিচের SITE_URL লাইনে আপনার ইউজার সাইটের GitHub Pages লিংক বসান
+#   4) Actions ট্যাব → "Build WorkHive APK" → Run workflow
+#   5) ৫–৮ মিনিট পর APK লিংক:
+#      https://github.com/<আপনার-ইউজারনেম>/<রিপোজিটরি-নাম>/releases/download/latest/WorkHive.apk
+# ═══════════════════════════════════════════════════════════════════════
+name: Build WorkHive APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  # ★★★ শুধু এই একটি লাইন বদলাবেন — আপনার ইউজার সাইটের লিংক (শেষে / সহ) ★★★
+  SITE_URL: "https://workhive.pro/"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate the Android project
+        run: |
+          cat > "settings.gradle" <<'EOF'
+          pluginManagement {
+              repositories {
+                  google()
+                  mavenCentral()
+                  gradlePluginPortal()
+              }
+          }
+          dependencyResolutionManagement {
+              repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+              repositories {
+                  google()
+                  mavenCentral()
+              }
+          }
+          rootProject.name = 'WorkHive'
+          include ':app'
+          EOF
+          cat > "build.gradle" <<'EOF'
+          plugins {
+              id 'com.android.application' version '8.5.2' apply false
+          }
+          EOF
+          cat > "gradle.properties" <<'EOF'
+          org.gradle.jvmargs=-Xmx2g -Dfile.encoding=UTF-8
+          android.nonTransitiveRClass=true
+          EOF
+          mkdir -p "app"
+          cat > "app/build.gradle" <<'EOF'
+          plugins {
+              id 'com.android.application'
+          }
+
+          android {
+              namespace 'com.workhive.app'
+              compileSdk 34
+
+              defaultConfig {
+                  applicationId 'com.workhive.app'
+                  minSdk 26            // Android 8.0+
+                  targetSdk 34
+                  versionCode 1
+                  versionName '1.0'
+              }
+
+              // The signing key is given by GitHub Actions (secrets). Without it the
+              // build still works (debug key) — but updates over an old install need the same key.
+              signingConfigs {
+                  release {
+                      def ks = System.getenv('KEYSTORE_PATH')
+                      if (ks != null && new File(ks).exists()) {
+                          storeFile file(ks)
+                          storePassword System.getenv('KEYSTORE_PASSWORD')
+                          keyAlias System.getenv('KEY_ALIAS')
+                          keyPassword System.getenv('KEY_PASSWORD')
+                      } else {
+                          initWith signingConfigs.debug
+                      }
+                  }
+              }
+
+              buildTypes {
+                  release {
+                      minifyEnabled false
+                      signingConfig signingConfigs.release
+                  }
+              }
+
+              compileOptions {
+                  sourceCompatibility JavaVersion.VERSION_17
+                  targetCompatibility JavaVersion.VERSION_17
+              }
+          }
+          EOF
+          mkdir -p "app/src/main"
+          cat > "app/src/main/AndroidManifest.xml" <<'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+              <uses-permission android:name="android.permission.INTERNET" />
+              <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+              <application
+                  android:allowBackup="false"
+                  android:icon="@mipmap/ic_launcher"
+                  android:roundIcon="@mipmap/ic_launcher_round"
+                  android:label="@string/app_name"
+                  android:supportsRtl="true"
+                  android:usesCleartextTraffic="false"
+                  android:theme="@style/AppTheme">
+
+                  <activity
+                      android:name=".MainActivity"
+                      android:exported="true"
+                      android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize|uiMode|density"
+                      android:windowSoftInputMode="adjustResize">
+                      <intent-filter>
+                          <action android:name="android.intent.action.MAIN" />
+                          <category android:name="android.intent.category.LAUNCHER" />
+                      </intent-filter>
+                  </activity>
+              </application>
+          </manifest>
+          EOF
+          mkdir -p "app/src/main/java/com/workhive/app"
+          cat > "app/src/main/java/com/workhive/app/MainActivity.java" <<'EOF'
+          package com.workhive.app;
+
+          import android.annotation.SuppressLint;
+          import android.app.Activity;
+          import android.app.DownloadManager;
+          import android.content.ActivityNotFoundException;
+          import android.content.Context;
+          import android.content.Intent;
+          import android.graphics.Bitmap;
+          import android.graphics.Color;
+          import android.net.Uri;
+          import android.os.Bundle;
+          import android.os.Environment;
+          import android.os.Handler;
+          import android.os.Looper;
+          import android.os.Message;
+          import android.view.View;
+          import android.view.ViewGroup;
+          import android.webkit.CookieManager;
+          import android.webkit.DownloadListener;
+          import android.webkit.JavascriptInterface;
+          import android.webkit.URLUtil;
+          import android.webkit.ValueCallback;
+          import android.webkit.WebChromeClient;
+          import android.webkit.WebResourceError;
+          import android.webkit.WebResourceRequest;
+          import android.webkit.WebSettings;
+          import android.webkit.WebView;
+          import android.webkit.WebViewClient;
+          import android.widget.FrameLayout;
+          import android.widget.ProgressBar;
+          import android.widget.Toast;
+
+          /**
+           * WorkHive app shell.
+           *
+           * The app simply shows your live website (site_url in res/values/config.xml)
+           * inside a WebView. Whenever you push a change to GitHub Pages, the app shows
+           * the new version automatically — no new APK needed.
+           *
+           * Back button:
+           *   1. asks the website (window.__whBack) to close a popup / go back one screen
+           *   2. if the website is already on its Home screen -> "press back again to exit"
+           */
+          public class MainActivity extends Activity {
+
+              private static final int FILE_REQ = 1001;
+              private static final String BG = "#070707";
+
+              private WebView web;
+              private ProgressBar bar;
+              private ValueCallback<Uri[]> filePathCallback;
+              private long lastBackAt = 0;
+              private boolean showingOffline = false;
+              private String siteUrl;
+              private String siteHost;
+
+              @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
+              @Override
+              protected void onCreate(Bundle savedInstanceState) {
+                  super.onCreate(savedInstanceState);
+
+                  siteUrl = getString(R.string.site_url).trim();
+                  Uri parsed = Uri.parse(siteUrl);
+                  siteHost = parsed.getHost() == null ? "" : parsed.getHost();
+
+                  getWindow().setStatusBarColor(Color.parseColor(BG));
+                  getWindow().setNavigationBarColor(Color.parseColor(BG));
+
+                  FrameLayout root = new FrameLayout(this);
+                  root.setBackgroundColor(Color.parseColor(BG));
+
+                  web = new WebView(this);
+                  web.setBackgroundColor(Color.parseColor(BG));
+                  root.addView(web, new FrameLayout.LayoutParams(
+                          ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+                  bar = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
+                  bar.setMax(100);
+                  bar.setProgress(0);
+                  bar.getProgressDrawable().setColorFilter(Color.parseColor("#00E676"), android.graphics.PorterDuff.Mode.SRC_IN);
+                  FrameLayout.LayoutParams barLp = new FrameLayout.LayoutParams(
+                          ViewGroup.LayoutParams.MATCH_PARENT, (int) (3 * getResources().getDisplayMetrics().density));
+                  root.addView(bar, barLp);
+
+                  setContentView(root);
+
+                  WebSettings s = web.getSettings();
+                  s.setJavaScriptEnabled(true);
+                  s.setDomStorageEnabled(true);          // Firebase login is kept here
+                  s.setDatabaseEnabled(true);
+                  s.setLoadWithOverviewMode(true);
+                  s.setUseWideViewPort(true);
+                  s.setBuiltInZoomControls(false);
+                  s.setSupportZoom(false);
+                  s.setMediaPlaybackRequiresUserGesture(false);
+                  s.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
+                  s.setCacheMode(WebSettings.LOAD_DEFAULT);
+                  s.setSupportMultipleWindows(true);
+                  s.setJavaScriptCanOpenWindowsAutomatically(true);
+                  s.setAllowFileAccess(true);            // only used for the bundled offline page
+                  s.setAllowContentAccess(true);
+                  // The website looks for this marker: it skips the landing page and
+                  // hides the Google button (Google blocks sign-in inside WebViews).
+                  s.setUserAgentString(s.getUserAgentString() + " WorkHiveApp/1.0");
+
+                  CookieManager cm = CookieManager.getInstance();
+                  cm.setAcceptCookie(true);
+                  cm.setAcceptThirdPartyCookies(web, true);
+
+                  web.addJavascriptInterface(new Bridge(), "WorkHiveNative");
+                  web.setWebViewClient(new AppClient());
+                  web.setWebChromeClient(new AppChrome());
+                  web.setDownloadListener(new DownloadListener() {
+                      @Override
+                      public void onDownloadStart(String url, String userAgent, String contentDisposition,
+                                                  String mimeType, long contentLength) {
+                          startDownload(url, userAgent, contentDisposition, mimeType);
+                      }
+                  });
+
+                  if (savedInstanceState != null) {
+                      web.restoreState(savedInstanceState);
+                  } else {
+                      web.loadUrl(siteUrl);
+                  }
+              }
+
+              // ───────────────────────── back button ─────────────────────────
+              @Override
+              public void onBackPressed() {
+                  if (showingOffline) {
+                      exitOnDoubleBack();
+                      return;
+                  }
+                  final String js = "(function(){try{return window.__whBack?(window.__whBack()?'1':'0'):'N';}catch(e){return 'N';}})()";
+                  web.evaluateJavascript(js, new ValueCallback<String>() {
+                      @Override
+                      public void onReceiveValue(String value) {
+                          if ("\"1\"".equals(value)) return;                       // website handled it
+                          if ("\"N\"".equals(value) && web.canGoBack()) {          // some other page
+                              web.goBack();
+                              return;
+                          }
+                          exitOnDoubleBack();
+                      }
+                  });
+              }
+
+              private void exitOnDoubleBack() {
+                  long now = System.currentTimeMillis();
+                  if (now - lastBackAt < 2000) {
+                      finish();
+                  } else {
+                      lastBackAt = now;
+                      Toast.makeText(this, "বের হতে আবার ব্যাক চাপুন", Toast.LENGTH_SHORT).show();
+                  }
+              }
+
+              // ───────────────────────── links ─────────────────────────
+              private boolean isInternal(Uri u) {
+                  String scheme = u.getScheme();
+                  if (scheme == null) return false;
+                  if ("file".equals(scheme) || "about".equals(scheme) || "data".equals(scheme) || "blob".equals(scheme)) return true;
+                  String host = u.getHost();
+                  if (host == null) return false;
+                  return host.equals(siteHost) || host.endsWith(".firebaseapp.com");
+              }
+
+              private boolean openExternal(Uri u) {
+                  try {
+                      Intent i = new Intent(Intent.ACTION_VIEW, u);
+                      i.addCategory(Intent.CATEGORY_BROWSABLE);
+                      startActivity(i);
+                  } catch (ActivityNotFoundException e) {
+                      Toast.makeText(this, "লিংকটি খোলার মতো অ্যাপ পাওয়া যায়নি", Toast.LENGTH_SHORT).show();
+                  } catch (Exception ignored) { }
+                  return true;
+              }
+
+              private class AppClient extends WebViewClient {
+                  @Override
+                  public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                      Uri u = request.getUrl();
+                      if (isInternal(u)) return false;
+                      return openExternal(u);           // Facebook, YouTube, tel:, mailto:, tg: ...
+                  }
+
+                  @Override
+                  public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                      super.onPageStarted(view, url, favicon);
+                      bar.setVisibility(View.VISIBLE);
+                      if (url != null && !url.startsWith("file:")) showingOffline = false;
+                  }
+
+                  @Override
+                  public void onPageFinished(WebView view, String url) {
+                      super.onPageFinished(view, url);
+                      bar.setVisibility(View.GONE);
+                      CookieManager.getInstance().flush();
+                  }
+
+                  @Override
+                  public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                      super.onReceivedError(view, request, error);
+                      if (request.isForMainFrame()) {
+                          showingOffline = true;
+                          view.loadUrl("file:///android_asset/offline.html");
+                      }
+                  }
+              }
+
+              private class AppChrome extends WebChromeClient {
+                  @Override
+                  public void onProgressChanged(WebView view, int newProgress) {
+                      bar.setProgress(newProgress);
+                      bar.setVisibility(newProgress >= 100 ? View.GONE : View.VISIBLE);
+                  }
+
+                  // image / file upload (task proof, KYC, avatar ...)
+                  @Override
+                  public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> callback,
+                                                   FileChooserParams params) {
+                      if (filePathCallback != null) filePathCallback.onReceiveValue(null);
+                      filePathCallback = callback;
+                      Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                      i.addCategory(Intent.CATEGORY_OPENABLE);
+                      String[] types = params.getAcceptTypes();
+                      String first = (types != null && types.length > 0 && types[0] != null && !types[0].isEmpty()) ? types[0] : "*/*";
+                      i.setType(first);
+                      if (params.getMode() == FileChooserParams.MODE_OPEN_MULTIPLE) {
+                          i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                      }
+                      try {
+                          startActivityForResult(Intent.createChooser(i, "ফাইল বেছে নিন"), FILE_REQ);
+                      } catch (ActivityNotFoundException e) {
+                          filePathCallback = null;
+                          return false;
+                      }
+                      return true;
+                  }
+
+                  // window.open(...) -> open outside (or inside if it is our own site)
+                  @Override
+                  public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg) {
+                      final WebView temp = new WebView(MainActivity.this);
+                      temp.setWebViewClient(new WebViewClient() {
+                          private boolean handled = false;
+
+                          private void handle(String url) {
+                              if (handled || url == null || url.equals("about:blank")) return;
+                              handled = true;
+                              Uri u = Uri.parse(url);
+                              if (isInternal(u)) web.loadUrl(url); else openExternal(u);
+                              new Handler(Looper.getMainLooper()).post(new Runnable() {
+                                  @Override public void run() { temp.destroy(); }
+                              });
+                          }
+
+                          @Override
+                          public boolean shouldOverrideUrlLoading(WebView v, WebResourceRequest r) {
+                              handle(r.getUrl().toString());
+                              return true;
+                          }
+
+                          @Override
+                          public void onPageStarted(WebView v, String url, Bitmap f) {
+                              handle(url);
+                          }
+                      });
+                      WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
+                      transport.setWebView(temp);
+                      resultMsg.sendToTarget();
+                      return true;
+                  }
+              }
+
+              @Override
+              protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+                  if (requestCode == FILE_REQ) {
+                      if (filePathCallback == null) return;
+                      Uri[] results = null;
+                      if (resultCode == RESULT_OK && data != null) {
+                          if (data.getClipData() != null) {
+                              int n = data.getClipData().getItemCount();
+                              results = new Uri[n];
+                              for (int k = 0; k < n; k++) results[k] = data.getClipData().getItemAt(k).getUri();
+                          } else if (data.getData() != null) {
+                              results = new Uri[]{data.getData()};
+                          }
+                      }
+                      filePathCallback.onReceiveValue(results);
+                      filePathCallback = null;
+                      return;
+                  }
+                  super.onActivityResult(requestCode, resultCode, data);
+              }
+
+              // ───────────────────────── downloads ─────────────────────────
+              private void startDownload(String url, String userAgent, String contentDisposition, String mimeType) {
+                  if (url == null || !url.startsWith("http")) { openExternal(Uri.parse(url == null ? "" : url)); return; }
+                  try {
+                      DownloadManager.Request req = new DownloadManager.Request(Uri.parse(url));
+                      String name = URLUtil.guessFileName(url, contentDisposition, mimeType);
+                      req.setMimeType(mimeType);
+                      req.addRequestHeader("User-Agent", userAgent);
+                      req.setTitle(name);
+                      req.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                      req.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, name);
+                      DownloadManager dm = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+                      if (dm != null) {
+                          dm.enqueue(req);
+                          Toast.makeText(this, "ডাউনলোড শুরু হয়েছে…", Toast.LENGTH_SHORT).show();
+                      }
+                  } catch (Exception e) {
+                      openExternal(Uri.parse(url));
+                  }
+              }
+
+              // ───────────────────────── offline page → retry ─────────────────────────
+              public class Bridge {
+                  @JavascriptInterface
+                  public void retry() {
+                      runOnUiThread(new Runnable() {
+                          @Override public void run() {
+                              showingOffline = false;
+                              web.loadUrl(siteUrl);
+                          }
+                      });
+                  }
+              }
+
+              // ───────────────────────── lifecycle ─────────────────────────
+              @Override
+              protected void onSaveInstanceState(Bundle outState) {
+                  super.onSaveInstanceState(outState);
+                  if (web != null) web.saveState(outState);
+              }
+
+              @Override
+              protected void onPause() {
+                  super.onPause();
+                  if (web != null) web.onPause();
+                  CookieManager.getInstance().flush();
+              }
+
+              @Override
+              protected void onResume() {
+                  super.onResume();
+                  if (web != null) web.onResume();
+              }
+
+              @Override
+              protected void onDestroy() {
+                  if (web != null) {
+                      ViewGroup parent = (ViewGroup) web.getParent();
+                      if (parent != null) parent.removeView(web);
+                      web.destroy();
+                  }
+                  super.onDestroy();
+              }
+          }
+          EOF
+          mkdir -p "app/src/main/res/values"
+          cat > "app/src/main/res/values/strings.xml" <<'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <resources>
+              <string name="app_name">WorkHive</string>
+          </resources>
+          EOF
+          mkdir -p "app/src/main/res/values"
+          cat > "app/src/main/res/values/colors.xml" <<'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <resources>
+              <color name="bg">#070707</color>
+              <color name="ic_bg">#0C1F13</color>
+          </resources>
+          EOF
+          mkdir -p "app/src/main/res/values"
+          cat > "app/src/main/res/values/styles.xml" <<'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <resources>
+              <style name="AppTheme" parent="@android:style/Theme.Material.NoActionBar">
+                  <item name="android:windowBackground">@color/bg</item>
+                  <item name="android:statusBarColor">@color/bg</item>
+                  <item name="android:navigationBarColor">@color/bg</item>
+                  <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+              </style>
+          </resources>
+          EOF
+          mkdir -p "app/src/main/res/values"
+          cat > "app/src/main/res/values/config.xml" <<EOF
+          <?xml version="1.0" encoding="utf-8"?>
+          <resources>
+              <!--
+                ★★★ এই একটি লাইনই আপনাকে বদলাতে হবে ★★★
+                আপনার ইউজার সাইটের GitHub Pages লিংক বসান (শেষে / রাখবেন).
+                উদাহরণ: https://movilover.github.io/WorkHive-User/
+              -->
+              <string name="site_url" translatable="false">$SITE_URL</string>
+          </resources>
+          EOF
+          mkdir -p "app/src/main/res/drawable"
+          cat > "app/src/main/res/drawable/ic_launcher_foreground.xml" <<'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <vector xmlns:android="http://schemas.android.com/apk/res/android"
+              android:width="108dp"
+              android:height="108dp"
+              android:viewportWidth="108"
+              android:viewportHeight="108">
+              <!-- green hexagon -->
+              <path
+                  android:fillColor="#00E676"
+                  android:pathData="M54,28 L76.5,41 L76.5,67 L54,80 L31.5,67 L31.5,41 Z" />
+              <!-- W -->
+              <path
+                  android:strokeColor="#001A0A"
+                  android:strokeWidth="4"
+                  android:strokeLineCap="round"
+                  android:strokeLineJoin="round"
+                  android:pathData="M41,45 L47,63 L54,50 L61,63 L67,45" />
+          </vector>
+          EOF
+          mkdir -p "app/src/main/res/mipmap-anydpi-v26"
+          cat > "app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" <<'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+              <background android:drawable="@color/ic_bg" />
+              <foreground android:drawable="@drawable/ic_launcher_foreground" />
+          </adaptive-icon>
+          EOF
+          mkdir -p "app/src/main/res/mipmap-anydpi-v26"
+          cat > "app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" <<'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+              <background android:drawable="@color/ic_bg" />
+              <foreground android:drawable="@drawable/ic_launcher_foreground" />
+          </adaptive-icon>
+          EOF
+          mkdir -p "app/src/main/assets"
+          cat > "app/src/main/assets/offline.html" <<'EOF'
+          <!DOCTYPE html>
+          <html lang="bn"><head><meta charset="utf-8">
+          <meta name="viewport" content="width=device-width,initial-scale=1">
+          <style>
+          html,body{height:100%;margin:0;background:#070707;color:#EFF3EF;font-family:sans-serif}
+          .w{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center}
+          .ico{font-size:56px;margin-bottom:14px}
+          h1{font-size:20px;margin:0 0 8px}
+          p{color:#9AA39C;font-size:14px;line-height:1.6;margin:0 0 24px;max-width:320px}
+          button{background:#00E676;color:#001a0a;border:0;border-radius:12px;padding:14px 28px;font-size:15px;font-weight:700}
+          </style></head>
+          <body><div class="w">
+          <div class="ico">📡</div>
+          <h1>ইন্টারনেট সংযোগ নেই</h1>
+          <p>WorkHive লোড করা যাচ্ছে না। আপনার ওয়াইফাই বা মোবাইল ডেটা চেক করে আবার চেষ্টা করুন।</p>
+          <button onclick="WorkHiveNative.retry()">আবার চেষ্টা করুন</button>
+          </div></body></html>
+          EOF
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
+      # Fixed signing key (GitHub Secrets) so every new APK can update the old one.
+      # Without secrets the build still works (debug key) — fine for the first test.
+      - name: Prepare signing key
+        env:
+          KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
+        run: |
+          if [ -n "$KEYSTORE_B64" ]; then
+            echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/workhive.jks"
+            echo "KEYSTORE_PATH=$RUNNER_TEMP/workhive.jks" >> "$GITHUB_ENV"
+            echo "KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}" >> "$GITHUB_ENV"
+            echo "KEY_ALIAS=${{ secrets.KEY_ALIAS }}" >> "$GITHUB_ENV"
+            echo "KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}" >> "$GITHUB_ENV"
+            echo "Using fixed signing key."
+          else
+            echo "No signing secrets found - using the debug key."
+          fi
+
+      - name: Build release APK
+        run: gradle assembleRelease --no-daemon --stacktrace
+
+      - name: Collect APK
+        run: |
+          mkdir -p dist
+          cp app/build/outputs/apk/release/app-release.apk dist/WorkHive.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: WorkHive-APK
+          path: dist/WorkHive.apk
+
+      - name: Publish to Releases (permanent download link)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: WorkHive APK (latest)
+          body: Latest WorkHive Android app. Download WorkHive.apk below.
+          files: dist/WorkHive.apk
+          make_latest: true
