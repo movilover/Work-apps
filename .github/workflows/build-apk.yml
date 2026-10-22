@@ -20,8 +20,10 @@ permissions:
   contents: write
 
 env:
-  # ★★★ শুধু এই একটি লাইন দরকার হলে বদলাবেন — আপনার ইউজার সাইটের লিংক (শেষে / সহ) ★★★
+  # ★★★ ইউজার সাইটের লিংক (শেষে / সহ) ★★★
   SITE_URL: "https://workhive.pro/"
+  # ★★★ প্রতিবার নতুন APK দিতে চাইলে শুধু এই ভার্সন নম্বর বাড়ান (1.0 → 1.1 → 1.2 …) ★★★
+  APP_VERSION: "1.0"
 
 jobs:
   build:
@@ -88,8 +90,11 @@ jobs:
                   applicationId 'com.workhive.app'
                   minSdk 26            // Android 8.0+
                   targetSdk 34
-                  versionCode 1
-                  versionName '1.0'
+                  // APP_VERSION is set in the workflow file (e.g. "1.1"); the build number goes up with every run,
+                  // so a new APK always installs over the old one.
+                  def runNo = (System.getenv('GITHUB_RUN_NUMBER') ?: '1') as Integer
+                  versionCode 100 + runNo
+                  versionName (System.getenv('APP_VERSION') ?: '1.0')
               }
 
               // The signing key is given by GitHub Actions (secrets). Without it the
@@ -290,7 +295,14 @@ jobs:
                   s.setAllowContentAccess(true);
                   // The website looks for this marker: it skips the landing page and
                   // hides the Google button (Google blocks sign-in inside WebViews).
-                  s.setUserAgentString(s.getUserAgentString() + " WorkHiveApp/1.0");
+                  String verName = "1.0";
+                  int verCode = 0;
+                  try {
+                      android.content.pm.PackageInfo pi = getPackageManager().getPackageInfo(getPackageName(), 0);
+                      if (pi.versionName != null) verName = pi.versionName;
+                      verCode = pi.versionCode;
+                  } catch (Exception ignored) { }
+                  s.setUserAgentString(s.getUserAgentString() + " WorkHiveApp/" + verName + " (build " + verCode + ")");
 
                   CookieManager cm = CookieManager.getInstance();
                   cm.setAcceptCookie(true);
@@ -679,6 +691,16 @@ jobs:
                   public void appReady() {
                       runOnUiThread(new Runnable() {
                           @Override public void run() { hideSplash(); }
+                      });
+                  }
+
+                  /** "Download update": open the link in the phone's browser (Chrome downloads the APK and offers to install it) */
+                  @JavascriptInterface
+                  public void openUrl(final String url) {
+                      runOnUiThread(new Runnable() {
+                          @Override public void run() {
+                              if (url != null && url.startsWith("https://")) openExternal(Uri.parse(url));
+                          }
                       });
                   }
 
@@ -1692,6 +1714,16 @@ jobs:
         with:
           name: WorkHive-APK
           path: dist/WorkHive.apk
+
+      # one permanent file per version:  .../releases/download/v<APP_VERSION>/WorkHive.apk
+      - name: Publish this version (v${{ env.APP_VERSION }})
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ env.APP_VERSION }}
+          name: WorkHive v${{ env.APP_VERSION }}
+          body: WorkHive Android app, version ${{ env.APP_VERSION }}.
+          files: dist/WorkHive.apk
+          make_latest: false
 
       - name: Publish to Releases (permanent download link)
         uses: softprops/action-gh-release@v2
